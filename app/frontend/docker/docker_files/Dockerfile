@@ -8,7 +8,7 @@ WORKDIR /code
 ENV PATH /code/node_modules/.bin:$PATH
 RUN npm install ;\
     npm run build  ;\
-    npm run build
+    npm run preview
 
 EXPOSE 4173
-CMD ["npm", "run", "dev"] 
+CMD ["npm", "run", "pr"] 
