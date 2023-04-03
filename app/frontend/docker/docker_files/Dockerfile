@@ -18,5 +18,5 @@ EXPOSE 4173
 
 
 # Start the app when the container is launched
-ENTRYPOINT ["/code/docker/entrypoints/entrypoint.sh"]
+CMD [ "npm", "run", "preview" ]
 
