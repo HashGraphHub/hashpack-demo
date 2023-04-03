@@ -19,6 +19,20 @@ SUPER_USER_FIRST_NAME = os.environ.get("SUPER_USER_FIRST_NAME")
 SUPER_USER_LAST_NAME = os.environ.get("SUPER_USER_LAST_NAME")
 
 # --------------------------------------------------------------
+# EMAIL SETTINGS
+# --------------------------------------------------------------
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", True)
+EMAIL_HOST_USER = os.environ.get("DONOT_REPLY_EMAIL")
+DISPLAY_NAME = os.environ.get("EMAIL_DISPLAY_NAME")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
+# --------------------------------------------------------------
+# END EMAIL SETTINGS
+# --------------------------------------------------------------
+
+# --------------------------------------------------------------
 # DATABASE SETTINGS
 # --------------------------------------------------------------
 DATABASES = {
@@ -55,3 +69,18 @@ HEDERA_OPERATOR_KEY = os.environ.get('OPERATOR_KEY')
 HEDERA_OPERATOR_PRIVATE_KEY = os.environ.get('OPERATOR_PRIVATE_KEY')
 HEDERA_ENV = os.environ.get('HEDERA_ENV')
 
+DJOSER = {
+    "USER_ID_FIELD": "email",
+    "LOGIN_FIELD": "email",
+    "SEND_ACTIVATION_EMAIL": True,
+    "ACTIVATION_URL": "/activate/",
+    "ACTIVATION_REDIRECT_URL": "http://localhost:3000/profile/",
+    "ACTIVATION_REDIRECT_FAIL_URL": "http://localhost:3000",
+    "PASSWORD_REDIRECT_URL": "http://localhost:3000",
+    "PASSWORD_REDIRECT_FAIL_URL": "http://localhost:3000",
+    'EMAIL': {
+            'activation': 'users.views.ActivationEmail',
+            "password_reset": "users.views.PasswordResetEmail",
+    }
+    
+}

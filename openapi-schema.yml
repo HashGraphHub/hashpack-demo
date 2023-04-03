@@ -1,0 +1,171 @@
+openapi: 3.0.2
+info:
+  title: 'HashgraphHub demo api'
+  version: '1.0'
+paths:
+  api/v1/auth/users/:
+    post:
+      operationId: createUser
+      description: 'This end point is used to create a new user via the SPA. An activation email is sent as soon as a new user is created'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreated'
+          description: 'User created'
+      tags:
+        - 'User Authentication'
+  api/v1/auth/token/login/:
+    post:
+      operationId: userLogin
+      description: 'This end point is used to authenticate a user and return an auth token'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserToken'
+          description: 'User token'
+      tags:
+        - 'User Authentication'
+
+  api/v1/auth/token/logout/:
+    post:
+      operationId: userLogout
+      description: 'This end point is used to log a user out. It deletes the auth token from the database'
+      parameters: []
+      security:
+        - bearerAuth: []
+      requestBody: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLogout'
+          description: 'User logged out'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+      tags:
+        - 'User Authentication'
+  
+components:
+  responses:
+    UnauthorizedError:
+      description: Authentication information is missing or invalid
+      headers:
+        WWW_Authenticate:
+          schema:
+            type: string
+            example: hjfghsdghoshvregikrhvgeirjgv
+            description: Token from /api/v1/auth/token/login/
+
+  securitySchemes:
+      bearerAuth:
+        type: http
+        scheme: bearer
+        bearerFormat: JWT 
+
+  schemas:
+    UserCreate:
+      type: object
+      properties:
+        first_name:
+          type: string
+          maxLength: 150
+          example: Roger
+          description: ''
+        last_name:
+          type: string
+          maxLength: 150
+          example: Redhat
+          description: ''
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          example: roger@hashgraphhub.com
+          description: ''
+        password:
+          type: string
+          writeOnly: true
+          example: qwerty123
+          description: ''
+      required:
+      - first_name
+      - last_name
+      - email
+      - password
+    UserCreated:
+      type: object
+      properties:
+        first_name:
+          type: string
+          maxLength: 150
+          example: Roger
+          description: ''
+        last_name:
+          type: string
+          maxLength: 150
+          example: Redhat
+          description: ''
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          example: roger@hashgraphhub.com
+          description: ''
+
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          example: roger@hashgraphhub.com
+          description: ''
+        password:
+          type: string
+          writeOnly: true
+          example: qwerty123
+          description: ''
+      required:
+      - email
+      - password
+
+    UserLogout:
+      type: object
+
+    UserToken:
+      type: object
+      properties:
+        auth_token:
+          type: string
+          example: skjfvhudhvevbesbvjbvejrfbvfbv
+          description: ''
