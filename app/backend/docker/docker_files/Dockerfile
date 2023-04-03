@@ -17,8 +17,7 @@ WORKDIR /code
 ### 4. Install packages
 RUN set -e; \
     /usr/local/bin/python -m pip install --upgrade pip ;\
-    python -m pip install -r /code/requirements/dev.txt ;\
-    chmod +x /code/docker/entrypoints/entrypoint.sh ;
+    python -m pip install -r /code/requirements/dev.txt 
 
 ### 5. Run entrypoint
 EXPOSE 8000
