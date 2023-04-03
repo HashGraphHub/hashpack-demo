@@ -74,13 +74,10 @@ DJOSER = {
     "LOGIN_FIELD": "email",
     "SEND_ACTIVATION_EMAIL": True,
     "ACTIVATION_URL": "/activate/",
-    "ACTIVATION_REDIRECT_URL": "http://localhost:3000/profile/",
-    "ACTIVATION_REDIRECT_FAIL_URL": "http://localhost:3000",
-    "PASSWORD_REDIRECT_URL": "http://localhost:3000",
-    "PASSWORD_REDIRECT_FAIL_URL": "http://localhost:3000",
+    "ACTIVATION_REDIRECT_URL": "http://localhost:4173/profile/",
+    "ACTIVATION_REDIRECT_FAIL_URL": "http://localhost:4173",
     'EMAIL': {
             'activation': 'users.views.ActivationEmail',
-            "password_reset": "users.views.PasswordResetEmail",
     }
     
 }
