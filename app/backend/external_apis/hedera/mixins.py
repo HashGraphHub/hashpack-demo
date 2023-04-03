@@ -11,7 +11,7 @@ from django.conf import settings
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
-from apis.hedera import client
+from external_apis.hedera import client
 
 # --------------------------------------------------------------
 # 3rd party imports

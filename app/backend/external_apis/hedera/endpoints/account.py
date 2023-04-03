@@ -7,8 +7,8 @@ from datetime import datetime
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
-from apis.hedera import HederaBase
-from apis.hedera import client
+from external_apis.hedera import HederaBase
+from external_apis.hedera import client
 
 # --------------------------------------------------------------
 # 3rd party imports

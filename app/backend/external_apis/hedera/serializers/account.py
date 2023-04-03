@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
-from apis.hedera import HederaBase
+from external_apis.hedera import HederaBase
 
 # --------------------------------------------------------------
 # 3rd party imports

@@ -1,12 +1,12 @@
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
-from apis.hedera.client import client 
-from apis.hedera.mixins import HederaBase
-from apis.hedera.serializers.account import GetAccountInfoSerializer
+from external_apis.hedera.client import client 
+from external_apis.hedera.mixins import HederaBase
+from external_apis.hedera.serializers.account import GetAccountInfoSerializer
 
-from apis.hedera.endpoints.transaction import Transaction 
-from apis.hedera.endpoints.account import Account as HederaAccount
+from external_apis.hedera.endpoints.transaction import Transaction 
+from external_apis.hedera.endpoints.account import Account as HederaAccount
 
 
 

@@ -1,8 +1,8 @@
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
-from apis.hedera import HederaBase
-from apis.hedera import client
+from external_apis.hedera import HederaBase
+from external_apis.hedera import client
 
 client = client()
 
