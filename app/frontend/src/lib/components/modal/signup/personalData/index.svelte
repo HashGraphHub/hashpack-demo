@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { TextInput, PasswordInput } from 'carbon-components-svelte';
+	import { PUBLIC_API } from '$env/static/public';
 
 	export let personalData: any = {};
+
+	const submitPersonalData = () => {
+		const url = PUBLIC_API + '/auth/users'
+	}
 
 	//  check if passwords match
 	let passwordDoNotMatch = false;
