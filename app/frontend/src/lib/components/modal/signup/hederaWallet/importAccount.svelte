@@ -8,8 +8,8 @@
 
 <ContentSwitcher style="margin: 1rem 0" bind:selectedIndex>
 	<Switch text="Private Key" />
-	<Switch text="Seed Phrase (12)" />
-	<Switch text="Seed Phrase (24)" />
+	<!-- <Switch text="Seed Phrase (12)" />
+	<Switch text="Seed Phrase (24)" /> -->
 </ContentSwitcher>
 
 {#if selectedIndex === 0}
