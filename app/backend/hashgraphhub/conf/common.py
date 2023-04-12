@@ -64,6 +64,9 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# --------------------------------------------------------------
+# MIDDLEWARE SETTINGS
+# --------------------------------------------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -74,6 +77,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# --------------------------------------------------------------
+# END MIDDLEWARE SETTINGS
+# --------------------------------------------------------------
 
 ROOT_URLCONF = 'hashgraphhub.urls'
 
@@ -132,6 +139,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
+# --------------------------------------------------------------
+# REST_FRAMEWORK SETTINGS
+# --------------------------------------------------------------
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -142,71 +153,26 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema', 
 }
 
+# --------------------------------------------------------------
+# END REST_FRAMEWORK SETTINGS
+# --------------------------------------------------------------
+
+
+# --------------------------------------------------------------
+# DJOSER SETTINGS
+# --------------------------------------------------------------
 DJOSER = {
     "USER_ID_FIELD": "email",
-    "LOGIN_FIELD": "email"
-}
-
-LOGFILEPATH = os.environ.get('LOGFILEPATH')
-CELERYLOGFILEPATH = os.environ.get('CELERYLOGFILEPATH')
-MAX_PLAYERS = os.environ.get('MAX_PLAYERS',2)
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-    },
-    'handlers': {
-        'console': {
-            'level': 'INFO',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple'
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-        }
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'propagate': True,
-        },
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        'hashgraphhub.custom': {
-            'handlers': ['console', 'mail_admins'],
-            'level': 'INFO',
-
-        }
+    "LOGIN_FIELD": "email",
+    "SEND_ACTIVATION_EMAIL": True,
+    "ACTIVATION_URL": "/activate/",
+    "ACTIVATION_REDIRECT_URL": "http://localhost:4173/login/",
+    "ACTIVATION_REDIRECT_FAIL_URL": "http://localhost:4173",
+    'EMAIL': {
+            'activation': 'users.views.ActivationEmail',
     }
+    
 }
-
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-    'http://app:3000'
-]
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
-
-CORS_ALLOW_CREDENTIALS = True
+# --------------------------------------------------------------
+# END DJOSER SETTINGS
+# --------------------------------------------------------------

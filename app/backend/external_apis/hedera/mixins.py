@@ -18,6 +18,7 @@ from external_apis.hedera import client
 # --------------------------------------------------------------
 from hedera import (
     PrivateKey,
+    AccountId,
     Hbar,
 )
 
@@ -41,8 +42,8 @@ class HederaBase:
         '''
         Used to create a client object to sign transactions
         '''
-        operator = self.get_account_id_object(self.operator)
-        operator_private_key = self.get_private_key_object(self.operator_private_key)
+        operator = self.get_str_repr_object(AccountId, self.operator)
+        operator_private_key = self.get_str_repr_object(PrivateKey, self.operator_private_key)
         set_operator = client.setOperator(operator, operator_private_key)
         return set_operator
 
@@ -53,6 +54,12 @@ class HederaBase:
         '''
         return PrivateKey.generate()
     
+    def get_public_key(self, key)->str:
+        '''
+        Used get public key from privatekey
+        '''
+        return key.getPublicKey()
+    
     def get_object_str_repr(self, obj)->str:
         '''
         Used to convert a Hedera object to str repr
@@ -61,10 +68,10 @@ class HederaBase:
     
     def get_str_repr_object(self, obj, str):
         '''
-        Used to convert a Hedera object to str repr
+        Used to convert str repr to Hedera obj
         '''
         if obj == Hbar:
-            return obj.fromTinybars(qty)
+            return obj.fromTinybars(str)
         return obj.fromString(str)
 
     

@@ -15,6 +15,11 @@ from utils.abstracts import (
     ExternalID
 )
 
+# --------------------------------------------------------------
+# App imports
+# --------------------------------------------------------------
+from users.managers import AccountManager 
+
 User = get_user_model()
 
 class Account(
@@ -35,3 +40,7 @@ class Account(
         on_delete=models.CASCADE,
         verbose_name=_('user'),
         related_name="account_user")
+    
+    private_key = models.CharField(verbose_name=_('private_key'),max_length=200 )
+
+    objects = AccountManager()

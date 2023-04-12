@@ -50,9 +50,9 @@ DATABASES = {
 # --------------------------------------------------------------
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
+# --------------------------------------------------------------
+# STATIC FILE SETTINGS
+# --------------------------------------------------------------
 STATICFILES_DIRS = [
         os.path.join(BASE_DIR,'static'),
         os.path.join(BASE_DIR,'media'),
@@ -64,20 +64,94 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static_cdn')
 MEDIA_ROOT = os.path.join(BASE_DIR,'media_cdn')
 
+# --------------------------------------------------------------
+# END STATIC FILE SETTINGS
+# --------------------------------------------------------------
+
+
+# --------------------------------------------------------------
+# HEDERA SETTINGS
+# --------------------------------------------------------------
 HEDERA_OPERATOR_ID =  os.environ.get('OPERATOR_ID')
 HEDERA_OPERATOR_KEY = os.environ.get('OPERATOR_KEY')
 HEDERA_OPERATOR_PRIVATE_KEY = os.environ.get('OPERATOR_PRIVATE_KEY')
 HEDERA_ENV = os.environ.get('HEDERA_ENV')
+# --------------------------------------------------------------
+# END HEDERA SETTINGS
+# --------------------------------------------------------------
 
-DJOSER = {
-    "USER_ID_FIELD": "email",
-    "LOGIN_FIELD": "email",
-    "SEND_ACTIVATION_EMAIL": True,
-    "ACTIVATION_URL": "/activate/",
-    "ACTIVATION_REDIRECT_URL": "http://localhost:4173/profile/",
-    "ACTIVATION_REDIRECT_FAIL_URL": "http://localhost:4173",
-    'EMAIL': {
-            'activation': 'users.views.ActivationEmail',
+# --------------------------------------------------------------
+# LOGGING SETTINGS
+# --------------------------------------------------------------
+LOGFILEPATH = os.environ.get('LOGFILEPATH')
+CELERYLOGFILEPATH = os.environ.get('CELERYLOGFILEPATH')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'hashgraphhub.custom': {
+            'handlers': ['console', 'mail_admins'],
+            'level': 'INFO',
+
+        }
     }
-    
 }
+
+# --------------------------------------------------------------
+# END LOGGING SETTINGS
+# --------------------------------------------------------------
+
+# --------------------------------------------------------------
+# CORS SETTINGS
+# --------------------------------------------------------------
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+    'http://app:3000'
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+# --------------------------------------------------------------
+# END CORS SETTINGS
+# --------------------------------------------------------------

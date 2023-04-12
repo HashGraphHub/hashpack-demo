@@ -5,6 +5,11 @@ import logging
 from datetime import datetime
 
 # --------------------------------------------------------------
+# Django imports
+# --------------------------------------------------------------
+from django.conf import settings
+
+# --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
 from external_apis.hedera import HederaBase
@@ -18,6 +23,7 @@ from hedera import (
 	AccountCreateTransaction,
     AccountInfoQuery,
     AccountUpdateTransaction, 
+    Hbar,
     Key
     )
 
@@ -215,22 +221,23 @@ class Account(HederaBase):
         super(Account, self).__init__(*args, **kwargs)
 
 
-    def account_create_transaction(self, balance):
+    def account_create_transaction(self, key:str) -> str:
         '''
         Docs - https://docs.hedera.com/hedera/sdks-and-apis/sdks/cryptocurrency/create-an-account
         '''
         client = self.get_client
 
-        ney_private_key = self.create_private_key
-        new_public_key = self.get_public_key(ney_private_key)
+        initial_balance = settings.HEDERA_INITIAL_BALANCE
+
+        public_key = self.get_public_key(key)
 
         obj = AccountCreateTransaction(
-            ).setKey(new_public_key
+            ).setKey(public_key
             ).setInitialBalance(
-                self.get_hbar_object(balance)
+                self.get_str_repr_object(Hbar, initial_balance)
             ).execute(client)
         
-        return obj
+        return self.get_object_str_repr(obj.getReceipt(client).accountId)
     
     def account_info_query(self):
         '''

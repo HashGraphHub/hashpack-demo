@@ -16,5 +16,4 @@ __all__ = [
     GetAccountInfoSerializer,
     Transaction,
     HederaAccount,
-    
 ]

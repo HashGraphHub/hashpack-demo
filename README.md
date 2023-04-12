@@ -36,10 +36,28 @@ git clone --branch develop git@github.com:HashGraphHub/hashpack-demo.git .
 Create a new .env file for the project and add your won information as required
 ```
 # windows machine
-copy env.template HashGraphHub/.env
+copy env.template .env
+cd app/frontend
+copy env.template .env
+cd ../..
 
 #mac/linux
-cp env.template HashGraphHub/.env
+cp env.template .env
+cd app/frontend
+cp env.template .env
+cd ../..
+```
+
+***
+***
+
+## Logging directory
+Create a new logs dir in backend
+```
+cd app/backend
+mkdir logs
+cd logs
+cd logs && echo This is our celery log > celery.log && echo This is our api log > api.log
 ```
 
 ***
