@@ -1,6 +1,8 @@
 static_cdn/
 media_cdn/
 
+.vscode/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

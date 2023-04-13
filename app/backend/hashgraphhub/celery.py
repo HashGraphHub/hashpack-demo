@@ -16,11 +16,4 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
  
 app.conf.timezone = 'Europe/London'
 
-app.conf.beat_schedule = {
-    "process_locked_games": {
-        "task": "gaming.tasks.process_locked_games",
-        "schedule": timedelta(minutes=5),
-    },
-}
- 
 app.autodiscover_tasks()

@@ -97,20 +97,6 @@ services:
       - celery
       - db
 
-  app:
-    build:
-      context: ../app/frontend
-      dockerfile: docker/docker_files/Dockerfile
-    restart: unless-stopped
-    volumes:
-      - ../app/frontend:/code
-      - '/code/node_modules'
-    env_file:
-      - ../app/frontend/.env
-    ports:
-      - 4173:4173
-    stdin_open: true
-
 
 volumes:
   pg:

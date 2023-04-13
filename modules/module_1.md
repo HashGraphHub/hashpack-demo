@@ -44,14 +44,14 @@ Now that we know what tech stack we're using we can begin creating the framework
 
 ```
 #option 1 - SSH
-git clone --branch develop git@github.com:bobby-didcoding/open_planet.git .
+git clone --branch module_1 git@github.com/HashGraphHub/hashpack-demo .
 
 #option 2 - Github CLI
-gh repo clone bobby-didcoding/open_planet .
-git checkout develop
+gh repo clone HashGraphHub/hashpack-demo .
+git checkout module_1
 
 #option 3 - HTTPS
-git clone --branch develop https://github.com/bobby-didcoding/open_planet.git .
+git clone --branch module_1 https://github.com/HashGraphHub/hashpack-demo .
 ```
 
 ***

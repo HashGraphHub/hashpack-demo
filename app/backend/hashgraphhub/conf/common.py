@@ -36,7 +36,6 @@ THIRD_PARTY_APPS = [
 ]
 
 APPS = [
-    'external_apis',
     'users',
 ]
 
