@@ -28,8 +28,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(api_urls)),
     path('', include('users.urls', namespace="users")),
-    re_path(r'api/v1/auth/', include('djoser.urls')),
-    re_path(r'api/v1/auth/', include('djoser.urls.authtoken')),
 ]
 
 if settings.DEBUG:
