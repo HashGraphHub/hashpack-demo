@@ -17,191 +17,301 @@ docker exec -it hashgraphhub-api-1 bash
 
 ```
 
-2) Go ahead and start a new app called external_apis
+2) Go ahead and create a serializer dir, __init__.py and account.py file with the following code.
 ```
-python manage.py startapp external_apis
-exit
-```
->Note: You should now have a new directory in /app/backend. We will use this directory to manage...You guessed it...External API's :)
-
-3) Use the following code to create a directories and files we need for Hedera
-
-```
-cd app/backend/external_apis
-mkdir hedera
-cd hedera
-echo This is our client file > client.py && echo This is our mixin file > mixins.py && echo '' > __init__.py
-mkdir endpoints
-cd endpoints
-echo This is our account endpoint file > account.py
-
-```
-***
-***
-
-## Start coding
-Let's start with the client.py file. Hedera has 3 environments: Testnet, Mainnet and Previewnet. We need a function that will allow us to work in the environment defined in our env file. 
->Note: We will be using testnet throughout this tutorial.
-
-1) Go ahead and open /app/backend/external_apis/hedera/client.py and add the following code.
-
-```
-from django.conf import settings
-#We are importing Client from the built in hedera SDK
-from hedera import Client
-
-def client():
-    '''
-    Used to configure the correct hedera environment
-    '''
-    env = settings.HEDERA_ENV
-    match env:
-        #Note: 'testnet' is default if nothing is passed in via .env
-        case "testnet":
-            return Client.forTestnet()
-        case "mainnet":
-            return Client.forMainnet()
-        case _:
-            return Client.forPreviewnet()
+cd app/backend/users
+mkdir serializers && cd serializers
+echo This is our account file > account.py  && echo '' > __init__.py
+cd ..
+echo This is our exceptions file > exceptions.py  && echo This is our permissions file > permissions.py
+cd views
+echo This is our account file > account.py
 ```
 
-2) Go ahead and open /app/backend/external_apis/hedera/mixins.py and use the following code to create a base class we can inherit from.
+3) Open the new /app/backend/users/serializers/account.py file and add the following code.
+
 ```
 # --------------------------------------------------------------
 # Django imports
 # --------------------------------------------------------------
-from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
+
+# --------------------------------------------------------------
+# Project imports
+# --------------------------------------------------------------
+from external_apis.hedera import HederaAccount
 
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
-from external_apis.hedera import client
+from users.models import Account
 
 # --------------------------------------------------------------
-# 3rd party imports
+# 3rd Party imports
 # --------------------------------------------------------------
-from hedera import (
-    PrivateKey,
-    AccountId,
-    Hbar,
-)
+from rest_framework import serializers
+from rest_framework.serializers import ValidationError
 
 
-client = client()
+class CreateAccountSerializer(serializers.ModelSerializer):
+
+	private_key = serializers.CharField(max_length=300)
+	external_id = serializers.CharField(max_length=300)
+
+	class Meta:
+		model = Account
+		fields = (
+			'external_id',
+			'private_key',
+		)
 
 
-class HederaBase:
-    '''
-    Base methods for Hedera api calls
-    '''
+	def validate(self, attrs):
 
-    def __init__ (self, *args, **kwargs):
-        self.account_id = kwargs.get("account_id")
-        self.operator = kwargs.get("operator", settings.HEDERA_OPERATOR_ID)
-        self.operator_key = kwargs.get("operator_key", settings.HEDERA_OPERATOR_KEY)
-        self.operator_private_key = kwargs.get("operator_private_key", settings.HEDERA_OPERATOR_PRIVATE_KEY)
+		operator = attrs.get("external_id")
+		operator_private_key = attrs.get("private_key")
+		
+		#instantiate the HederaAccount class
+		acc = HederaAccount(
+			account_id = operator,
+			operator = operator,
+        	operator_private_key = operator_private_key
+		)
 
-    @property
-    def get_client(self):
-        '''
-        Used to create a client object to sign transactions
-        '''
-        operator = self.get_str_repr_object(AccountId, self.operator)
-        operator_private_key = self.get_str_repr_object(PrivateKey, self.operator_private_key)
-        set_operator = client.setOperator(operator, operator_private_key)
-        return set_operator
+		#test validity of account details via API
+		acc = acc.account_info_query()
+		if acc["status"] == 400:
+			raise ValidationError(f"Validation Error: {acc['obj']}")
+		return attrs
+	
+	def create_account(self, request, data):
+		acc, create = Account.objects.get_or_create(
+			user = request.user, **data
+		)
+		return acc
 
-    @property
-    def create_private_key(self)->PrivateKey:
-        '''
-        Used to create a new private key
-        '''
-        return PrivateKey.generate()
-    
-    def get_public_key(self, key)->str:
-        '''
-        Used to get public key from privatekey
-        '''
-        return key.getPublicKey()
-    
-    def get_object_str_repr(self, obj)->str:
-        '''
-        Used to convert a Hedera object to str repr
-        '''
-        return obj.toString()
-    
-    def get_str_repr_object(self, obj, str):
-        '''
-        Used to convert str repr to Hedera obj
-        '''
-        if obj == Hbar:
-            return obj.fromTinybars(str)
-        return obj.fromString(str)
+
+
+class AccountSerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model = Account
+		fields = (
+			'id',
+			'external_id',
+			'private_key'
+		)
 ```
 
-3) Go ahead and open /app/backend/external_apis/hedera/endpoints/account.py and use the following code.
-```
-# --------------------------------------------------------------
-# Django imports
-# --------------------------------------------------------------
-from django.conf import settings
-
-# --------------------------------------------------------------
-# App imports
-# --------------------------------------------------------------
-from external_apis.hedera import HederaBase
-from external_apis.hedera import client
-
-# --------------------------------------------------------------
-# 3rd party imports
-# --------------------------------------------------------------
-from hedera import (
-    AccountId, 
-    AccountInfoQuery,
-    )
-
-client = client()
-
-
-class Account(HederaBase):
-    '''
-    This handles all API calls to Stripes Customer endpoint
-    '''
-
-    def __init__(self, *args, **kwargs):
-        super(Account, self).__init__(*args, **kwargs)
-    
-    def account_info_query(self):
-        '''
-        Docs - https://docs.hedera.com/hedera/sdks-and-apis/sdks/cryptocurrency/get-account-info
-        '''
-        account_id = self.get_str_repr_object(AccountId, self.account_id)
-        client = self.get_client
-        
-        #Call to hedera endpoint
-        obj = AccountInfoQuery(
-            ).setAccountId(account_id
-            ).execute(client)
-        return obj
-    
-```
-
-4) We can now add our new classes to the __init__.py file. Go ahead and open /app/backend/external_apis/hedera/__init__.py and use the following code.
+4) We now Open the new /app/backend/users/serializers/__init__.py file and add the following code.
 ```
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
-from external_apis.hedera.client import client 
-from external_apis.hedera.mixins import HederaBase
+from users.serializers.account import AccountSerializer, CreateAccountSerializer
 
-from external_apis.hedera.endpoints.account import Account as HederaAccount
+
 
 __all__ = [
-    client,
-    HederaBase,
-    HederaAccount
+    CreateAccountSerializer,
+    AccountSerializer
 ]
 ```
 
+5) Open the new /app/backend/users/views/account.py file and add the following code.
+
+```
+# --------------------------------------------------------------
+# Python imports
+# --------------------------------------------------------------
+from json import JSONDecodeError
+
+# --------------------------------------------------------------
+# Django imports
+# --------------------------------------------------------------
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+
+# --------------------------------------------------------------
+# App imports
+# --------------------------------------------------------------
+from users.serializers import CreateAccountSerializer, AccountSerializer
+from users.models import Account
+from users.permissions import AccountBelongsToUser
+
+# --------------------------------------------------------------
+# 3rd Party imports
+# --------------------------------------------------------------
+from rest_framework.parsers import JSONParser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.mixins import ListModelMixin,UpdateModelMixin,RetrieveModelMixin
+
+
+
+class AccountViewSet(
+        ListModelMixin,
+        RetrieveModelMixin, 
+        UpdateModelMixin,
+        viewsets.GenericViewSet
+        ):
+    """
+    A simple ViewSet for creating, listing or retrieving account details.
+    """
+    # permission_classes = (IsAuthenticated,)
+    queryset = Account.objects.all()
+    permission_classes = (IsAuthenticated, AccountBelongsToUser)
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return CreateAccountSerializer
+        return AccountSerializer
+
+    def list(self, request):
+        serializer = self.get_serializer_class(self.queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        obj = get_object_or_404(self.queryset, pk = pk)
+        serializer = self.get_serializer_class(obj)
+        return Response(serializer.data)
+
+    def create(self, request):
+        try:
+            data = JSONParser().parse(request)
+            serializer = self.get_serializer_class()(data=data)
+            if serializer.is_valid(raise_exception=True):
+                account = serializer.create_account(request, data)
+                return Response(AccountSerializer(account).data)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except JSONDecodeError:
+            return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)+
+```
+6) We now Open the new /app/backend/users/views/__init__.py file and add the following code.
+```
+from users.views.activate_email import ActivationEmail
+from users.views.activate import activate
+from users.views.password_reset_email import PasswordResetEmail
+
+from users.views.account import AccountViewSet
+
+__all__ = [
+    ActivationEmail,
+    activate,
+    PasswordResetEmail,
+    AccountViewSet
+]
+```
+7) We can now add our new view to our router. Open /app/backend/users/routers and add the following code.
+```
+# --------------------------------------------------------------
+# Django imports
+# --------------------------------------------------------------
+from django.urls import path, re_path, include
+
+# --------------------------------------------------------------
+# app imports
+# --------------------------------------------------------------
+from users.views import AccountViewSet
+
+# --------------------------------------------------------------
+# Project imports
+# --------------------------------------------------------------
+from hashgraphhub.routers import router
+
+router.register('account', AccountViewSet)
+urlpatterns = router.urls
+```
+7) Lets create the permissions and exceptions that have been referenced in the view. Open /app/backend/users/permissions and add the following code.
+```
+# --------------------------------------------------------------
+# Python imports
+# --------------------------------------------------------------
+import logging
+
+# --------------------------------------------------------------
+# App imports
+# --------------------------------------------------------------
+from users.models import Account
+from users.exceptions import (
+    AccountOwnershipException, 
+)
+
+# --------------------------------------------------------------
+# 3rd Party imports
+# --------------------------------------------------------------
+from rest_framework import permissions
+
+
+logger = logging.getLogger(__name__)
+
+
+class AccountBelongsToUser(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        if request.method == "POST":
+            return True
+        else:
+            account_id = getattr(request.account, "id", None)
+            user_id = request.user.id
+
+            if not self._does_account_belong_to_user(account_id, user_id):
+                raise AccountOwnershipException()
+            return True
+
+    def _does_account_belong_to_user(self, account_id, user_id) -> bool:
+        return Account.objects.filter(
+            id=account_id,
+            user__id=user_id
+        ).exists()
+```
+8) Open /app/backend/users/exceptions and add the following code.
+```
+# --------------------------------------------------------------
+# Django imports
+# --------------------------------------------------------------
+from django.conf import settings
+
+# --------------------------------------------------------------
+# 3rd Party imports
+# --------------------------------------------------------------
+from rest_framework import status
+from rest_framework.exceptions import ValidationError
+
+
+class AccountOwnershipException(ValidationError):
+    default_detail = "Account does not belong to user"
+```
+***
+***
+## Test our endpoint
+We can now test our endpoints. We already have most of the boilerplate endpoints already working so I'll walk you through how everything works.
+
+1) Use the following code to enter into the api container.
+```
+docker exec -it hashgraphhub-api-1 bash
+
+```
+
+2) Use the following code to create a new user:
+
+```
+http post http://api:8000/api/v1/auth/users/ email=bobby@didcoding.com first_name=Bobby last_name=Stearman password=fredfred1
+```
+
+3) Login with the following command:
+
+```
+http post http://api:8000/api/v1/auth/token/login/ email=bobby@didcoding.com password=fredfred1
+```
+>Note make a note of your new token and add it to the import wallet endpoint.
+
+4) Now import a wallet with the following command.
+```
+http http://api:8000/api/v1/account/ 'Authorization: Token <your token>' external_id=<your wallet id> private_key=<your private key>
+```
 ***
 ***
