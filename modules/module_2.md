@@ -165,6 +165,15 @@ client = client()
 
 class Account(HederaBase):
     '''
+    This handles all API calls to Stripes Customer endpoint
+    '''
+
+    def __init__(self, *args, **kwargs):
+        super(Account, self).__init__(*args, **kwargs)
+    
+    def account_info_query(self):
+
+        '''
         Docs - https://docs.hedera.com/hedera/sdks-and-apis/sdks/cryptocurrency/get-account-info
         '''
         try:
