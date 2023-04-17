@@ -57,7 +57,7 @@ class AccountViewSet(
     def create(self, request):
         try:
             data = JSONParser().parse(request)
-            serializer = self.get_serializer_class(data=data)
+            serializer = self.get_serializer_class()(data=data)
             if serializer.is_valid(raise_exception=True):
                 account = serializer.create_account(request, data)
                 return Response(AccountSerializer(account).data)

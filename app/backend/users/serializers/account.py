@@ -18,6 +18,7 @@ from users.models import Account
 # 3rd Party imports
 # --------------------------------------------------------------
 from rest_framework import serializers
+from rest_framework.serializers import ValidationError
 
 
 class CreateAccountSerializer(serializers.ModelSerializer):
@@ -46,16 +47,25 @@ class CreateAccountSerializer(serializers.ModelSerializer):
 		)
 
 		#test validity of account details via API
-		acc.account_info_query()
-
+		acc = acc.account_info_query()
+		if acc["status"] == 400:
+			raise ValidationError(f"Validation Error: {acc['obj']}")
 		return attrs
+	
+	def create_account(self, request, data):
+		acc, create = Account.objects.get_or_create(
+			user = request.user, **data
+		)
+		return acc
 
 
 
-class AccountSerializer(serializers.Serializer):
+class AccountSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Account
 		fields = (
+			'id',
 			'external_id',
+			'private_key'
 		)

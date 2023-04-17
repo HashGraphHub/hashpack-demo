@@ -243,15 +243,20 @@ class Account(HederaBase):
         '''
         Docs - https://docs.hedera.com/hedera/sdks-and-apis/sdks/cryptocurrency/get-account-info
         '''
-        account_id = self.get_str_repr_object(AccountId, self.account_id)
-        client = self.get_client
+        try:
+            account_id = self.get_str_repr_object(AccountId, self.account_id)
+            client = self.get_client
         
-        #Call to hedera endpoint
-        obj = AccountInfoQuery(
-            ).setAccountId(account_id
-            ).execute(client)
-        return obj
-    
+            #Call to hedera endpoint
+            obj = AccountInfoQuery(
+                ).setAccountId(account_id
+                ).execute(client)
+
+            return {"status":200, "obj": obj}
+        except Exception as e:
+            return {"status":400, "obj": e}
+
+            
     def account_update_transaction(self, method, value):
         '''
         Docs - https://docs.hedera.com/hedera/sdks-and-apis/sdks/cryptocurrency/update-an-account
