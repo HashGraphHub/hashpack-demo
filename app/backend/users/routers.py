@@ -1,5 +1,5 @@
 # --------------------------------------------------------------
-# App imports
+# Django imports
 # --------------------------------------------------------------
 from django.urls import path, re_path, include
 
@@ -9,6 +9,3 @@ from django.urls import path, re_path, include
 from hashgraphhub.routers import router
 
 urlpatterns = router.urls
-
-urlpatterns += [
-]
