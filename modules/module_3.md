@@ -11,15 +11,9 @@
 
 In the last module we created a simple Hedera account query endpoint. We can now add this to our project endpoints to enable users to import a wallet.
 
-1) Use the following code to enter into the api container.
+1) Go ahead and create a serializer dir, __init__.py and account.py file with the following code.
 ```
-docker exec -it hashgraphhub_api_1 bash
-
-```
-
-2) Go ahead and create a serializer dir, __init__.py and account.py file with the following code.
-```
-cd users
+cd app/backend/users
 mkdir serializers && cd serializers
 echo This is our account file > account.py  && echo '' > __init__.py
 cd ..
@@ -29,7 +23,7 @@ echo This is our account file > account.py
 exit
 ```
 
-3) Open the new /app/backend/users/serializers/account.py file and add the following code.
+2) Open the new /app/backend/users/serializers/account.py file and add the following code.
 
 ```
 # --------------------------------------------------------------
@@ -105,7 +99,7 @@ class AccountSerializer(serializers.ModelSerializer):
 		)
 ```
 
-4) We now Open the new /app/backend/users/serializers/__init__.py file and add the following code.
+3) We now Open the new /app/backend/users/serializers/__init__.py file and add the following code.
 ```
 # --------------------------------------------------------------
 # App imports
@@ -120,7 +114,7 @@ __all__ = [
 ]
 ```
 
-5) Open the new /app/backend/users/views/account.py file and add the following code.
+4) Open the new /app/backend/users/views/account.py file and add the following code.
 
 ```
 # --------------------------------------------------------------
@@ -191,7 +185,7 @@ class AccountViewSet(
         except JSONDecodeError:
             return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)
 ```
-6) We now Open the new /app/backend/users/views/__init__.py file and add the following code.
+5) We now Open the new /app/backend/users/views/__init__.py file and add the following code.
 ```
 from users.views.activate_email import ActivationEmail
 from users.views.activate import activate
@@ -206,7 +200,7 @@ __all__ = [
     AccountViewSet
 ]
 ```
-7) We can now add our new view to our router. Open /app/backend/users/routers and add the following code.
+6) We can now add our new view to our router. Open /app/backend/users/routers and add the following code.
 ```
 # --------------------------------------------------------------
 # Django imports
