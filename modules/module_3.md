@@ -296,15 +296,17 @@ docker exec -it hashgraphhub_api_1 bash
 ```
 http post http://api:8000/api/v1/auth/users/ email=<your email> first_name=<your first name> last_name=<your last name> password=<your password>
 ```
+3) You should receive an activation email. Please click the link to activate the new account.
 
-3) Login with the following command:
+
+4) Login with the following command:
 
 ```
-http post http://api:8000/api/v1/auth/token/login/ email=bobby@didcoding.com password=fredfred1
+http post http://api:8000/api/v1/auth/token/login/ email=<your email> password=<your password>
 ```
 >Note make a note of your new token and add it to the import wallet endpoint.
 
-4) Now import a wallet with the following command.
+5) Now import a wallet with the following command.
 ```
 http http://api:8000/api/v1/account/ 'Authorization: Token <your token>' external_id=<your wallet id> private_key=<your private key>
 ```
