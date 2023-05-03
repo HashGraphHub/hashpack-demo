@@ -294,7 +294,7 @@ docker exec -it hashgraphhub_api_1 bash
 2) Use the following code to create a new user:
 
 ```
-http post http://api:8000/api/v1/auth/users/ email=bobby@didcoding.com first_name=Bobby last_name=Stearman password=fredfred1
+http post http://api:8000/api/v1/auth/users/ email=<your email> first_name=<your first name> last_name=<your last name> password=<your password>
 ```
 
 3) Login with the following command:
