@@ -57,7 +57,7 @@ class SignUpTestCase(APITestCase):
             "account_id": "0.0.112233"
         }
         self.url = "/signup/"
-        user = User(username="0.0.332211")
+        user = CustomUser(username="0.0.332211")
         user.set_password("0.0.332211")
         user.save()
 
@@ -68,7 +68,7 @@ class SignUpTestCase(APITestCase):
         data = self.data
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(User.objects.count(), 2)
+        self.assertEqual(CustomUser.objects.count(), 2)
 
     
     def test_create_user_with_duplicate_account_id(self):
