@@ -25,7 +25,7 @@ class CustomUserAdmin(UserAdmin):
 	(None,{
 		'classes':('wide',),
 		'fields':('email','phone_number','first_name',
-	    'last_name','gender','image','dob', 'role', 'about',
+	    'last_name','gender','image','dob', 'about',
 		'password1','password2','is_active','is_staff',
 		'groups','user_permissions')
 		}
