@@ -34,6 +34,7 @@ echo This is our client file > client.py && echo This is our mixin file > mixins
 mkdir endpoints
 cd endpoints
 echo This is our account endpoint file > account.py
+cd ../../../../..
 
 ```
 ***
