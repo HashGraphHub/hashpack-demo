@@ -13,7 +13,7 @@ In the last module we created a simple Hedera account query endpoint. We can now
 
 1) Use the following code to enter into the api container.
 ```
-docker exec -it hashgraphhub-api-1 bash
+docker exec -it hashgraphhub_api_1 bash
 
 ```
 
