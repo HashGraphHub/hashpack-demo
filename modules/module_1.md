@@ -44,7 +44,7 @@ Now that we know what tech stack we're using we can begin creating the framework
 
 ```
 #option 1 - SSH
-git clone --branch module_1 git@github.com/HashGraphHub/hashpack-demo .
+git clone --branch module_1 git@github.com:HashGraphHub/hashpack-demo.git .
 
 #option 2 - Github CLI
 gh repo clone HashGraphHub/hashpack-demo .
