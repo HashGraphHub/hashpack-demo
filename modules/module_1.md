@@ -81,8 +81,8 @@ Create a new logs dir in backend
 ```
 cd app/backend
 mkdir logs
-cd logs
 cd logs && echo This is our celery log > celery.log && echo This is our api log > api.log
+cd ../../..
 ```
 
 ***
