@@ -13,7 +13,7 @@ In this module we will begin building our Hedera API connector. We will be using
 
 1) Use the following code to enter into the api container.
 ```
-docker exec -it HashGraphHub-api-1 bash
+docker exec -it hashgraphhub_api_1 bash
 
 ```
 
