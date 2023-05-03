@@ -19,7 +19,7 @@ docker exec -it hashgraphhub_api_1 bash
 
 2) Go ahead and create a serializer dir, __init__.py and account.py file with the following code.
 ```
-cd backend/users
+cd users
 mkdir serializers && cd serializers
 echo This is our account file > account.py  && echo '' > __init__.py
 cd ..
