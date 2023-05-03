@@ -300,7 +300,9 @@ http post http://api:8000/api/v1/auth/token/login/ email=<your email> password=<
 ```
 >Note make a note of your new token and add it to the import wallet endpoint.
 
-5) Now import a wallet with the following command.
+5) Create a new testnet account via your Hedera wallet provider and make a note of the wallet id and private key.
+
+6) Now import the wallet with the following command.
 ```
 http http://api:8000/api/v1/account/ 'Authorization: Token <your token>' external_id=<your wallet id> private_key=<your private key>
 ```
