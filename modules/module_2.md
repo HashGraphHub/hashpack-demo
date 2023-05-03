@@ -1,6 +1,6 @@
 # <span style="color:#f9b000">Hedera API</span>
 
-![Hedera API](https://static.didcoding.com/media/tutorials/hashgraphhub/demo_module_2.jpg "Hedera API")
+![Hedera API](https://static.didcoding.com/media/tutorials/hashgraphhub_how_to/how_to_build_a_hedera_app_2.jpg "Hedera API")
 
 
 <span style="color:#f9b000">Feel free to use this repo as a 'cheat sheet'</span>
