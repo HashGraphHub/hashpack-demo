@@ -272,14 +272,8 @@ class AccountBelongsToUser(permissions.BasePermission):
 8) Open /app/backend/users/exceptions and add the following code.
 ```
 # --------------------------------------------------------------
-# Django imports
-# --------------------------------------------------------------
-from django.conf import settings
-
-# --------------------------------------------------------------
 # 3rd Party imports
 # --------------------------------------------------------------
-from rest_framework import status
 from rest_framework.exceptions import ValidationError
 
 
