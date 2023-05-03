@@ -189,7 +189,7 @@ class AccountViewSet(
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except JSONDecodeError:
-            return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)+
+            return JsonResponse({"result": "error","message": "Json decoding error"}, status= 400)
 ```
 6) We now Open the new /app/backend/users/views/__init__.py file and add the following code.
 ```
