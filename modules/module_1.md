@@ -97,6 +97,18 @@ docker-compose -f HashGraphHub/docker-compose.yml up -d --build --remove-orphans
 ***
 ***
 
+## Run Python commands for project setup
+Use the following command set the project up correctly
+```
+docker-compose -f HashGraphHub/docker-compose.yml exec app python manage.py migrate --noinput
+docker-compose -f HashGraphHub/docker-compose.yml exec app python manage.py runscript config
+docker-compose -f HashGraphHub/docker-compose.yml exec app python manage.py test
+
+```
+
+***
+***
+
 ## Finish up
 
 You should be able to see the fruits of our labour by visiting http://localhost:8000/api/v1/
