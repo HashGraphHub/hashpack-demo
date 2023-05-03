@@ -58,7 +58,7 @@ git clone --branch module_1 https://github.com/HashGraphHub/hashpack-demo .
 ***
 
 ## Environment variables
-Create a new .env file for the project and add your won information as required
+Create a new .env file for the project and add your own information as required
 ```
 # windows machine
 copy env.template .env
