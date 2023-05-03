@@ -1,6 +1,6 @@
 # <span style="color:#f9b000">Project framework</span>
 
-![Project framework](https://static.didcoding.com/media/tutorials/hashgraphhub/demo_module_1.jpg "Project framework")
+![Project framework](https://static.didcoding.com/media/tutorials/hederahashgraph_how_to/how_to_build_a_hedera_app_1.jpg "Project framework")
 
 
 <span style="color:#f9b000">Feel free to use this repo as a 'cheat sheet'</span>
