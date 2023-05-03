@@ -1,6 +1,6 @@
 # <span style="color:#f9b000">REST API</span>
 
-![REST API](https://static.didcoding.com/media/tutorials/hashgraphhub/demo_module_3.jpg "REST API")
+![REST API](https://static.didcoding.com/media/tutorials/hashgraphhub_how_to/how_to_build_a_hedera_app_3.jpg "REST API")
 
 
 <span style="color:#f9b000">Feel free to use this repo as a 'cheat sheet'</span>
