@@ -26,6 +26,7 @@ cd ..
 echo This is our exceptions file > exceptions.py  && echo This is our permissions file > permissions.py
 cd views
 echo This is our account file > account.py
+exit
 ```
 
 3) Open the new /app/backend/users/serializers/account.py file and add the following code.
