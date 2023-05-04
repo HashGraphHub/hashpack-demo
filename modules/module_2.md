@@ -13,7 +13,7 @@ In this module we will begin building our Hedera API connector. We will be using
 
 1) Use the following code to create a new app in the backend called extrnal_apis.
 ```
-docker-compose -f HashGraphHub/docker-compose.yml exec api python manage.py startapp extrnal_apis
+docker-compose -f HashGraphHub/docker-compose.yml exec api python manage.py startapp external_apis
 
 ```
 
