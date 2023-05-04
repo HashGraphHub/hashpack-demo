@@ -26,7 +26,6 @@
  * ```
  */
 declare module '$env/static/private' {
-	export const API_URL: string;
 	export const npm_config_user_agent: string;
 	export const NODE_VERSION: string;
 	export const HOSTNAME: string;
@@ -42,7 +41,6 @@ declare module '$env/static/private' {
 	export const COLOR: string;
 	export const npm_config_metrics_registry: string;
 	export const npm_config_prefix: string;
-	export const TERM: string;
 	export const npm_config_cache: string;
 	export const npm_config_node_gyp: string;
 	export const PATH: string;
@@ -72,7 +70,7 @@ declare module '$env/static/private' {
  * ```
  */
 declare module '$env/static/public' {
-
+	export const PUBLIC_API: string;
 }
 
 /**
@@ -89,7 +87,6 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
-		API_URL: string;
 		npm_config_user_agent: string;
 		NODE_VERSION: string;
 		HOSTNAME: string;
@@ -105,7 +102,6 @@ declare module '$env/dynamic/private' {
 		COLOR: string;
 		npm_config_metrics_registry: string;
 		npm_config_prefix: string;
-		TERM: string;
 		npm_config_cache: string;
 		npm_config_node_gyp: string;
 		PATH: string;
@@ -140,6 +136,7 @@ declare module '$env/dynamic/private' {
  */
 declare module '$env/dynamic/public' {
 	export const env: {
+		PUBLIC_API: string;
 		[key: `PUBLIC_${string}`]: string | undefined;
 	}
 }

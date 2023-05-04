@@ -1,6 +1,5 @@
-version: '3.7'
+version: "3.7"
 services:
-
   db:
     image: kartoza/postgis:13.0
     # image: postgres
@@ -37,7 +36,7 @@ services:
       && python manage.py migrate
       && python manage.py runserver 0.0.0.0:8000
       && python manage.py test
-      && python manage.py runscript config" 
+      && python manage.py runscript config"
     volumes:
       - ../app/backend:/code
     ports:
@@ -51,8 +50,8 @@ services:
   redis:
     image: redis:6-alpine
     ports:
-      - "6379:6379" 
-      
+      - "6379:6379"
+
   celery:
     restart: always
     build:
@@ -104,13 +103,12 @@ services:
     restart: unless-stopped
     volumes:
       - ../app/frontend:/code
-      - '/code/node_modules'
+      - "/code/node_modules"
     env_file:
       - ../app/frontend/.env
     ports:
       - 4173:4173
     stdin_open: true
-
 
 volumes:
   pg:
