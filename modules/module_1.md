@@ -1,6 +1,6 @@
 # <span style="color:#f9b000">Project framework</span>
 
-![Project framework](https://static.didcoding.com/media/tutorials/hashgraphhub/demo_module_1.jpg "Project framework")
+![Project framework](https://static.didcoding.com/media/tutorials/hederahashgraph_how_to/how_to_build_a_hedera_app_1.jpg "Project framework")
 
 
 <span style="color:#f9b000">Feel free to use this repo as a 'cheat sheet'</span>
@@ -44,21 +44,21 @@ Now that we know what tech stack we're using we can begin creating the framework
 
 ```
 #option 1 - SSH
-git clone --branch develop git@github.com:bobby-didcoding/open_planet.git .
+git clone --branch module_1 git@github.com:HashGraphHub/hashpack-demo.git .
 
 #option 2 - Github CLI
-gh repo clone bobby-didcoding/open_planet .
-git checkout develop
+gh repo clone HashGraphHub/hashpack-demo .
+git checkout module_1
 
 #option 3 - HTTPS
-git clone --branch develop https://github.com/bobby-didcoding/open_planet.git .
+git clone --branch module_1 https://github.com/HashGraphHub/hashpack-demo.git .
 ```
 
 ***
 ***
 
 ## Environment variables
-Create a new .env file for the project and add your won information as required
+Create a new .env file for the project and add your own information as required
 ```
 # windows machine
 copy env.template .env
@@ -81,8 +81,8 @@ Create a new logs dir in backend
 ```
 cd app/backend
 mkdir logs
-cd logs
 cd logs && echo This is our celery log > celery.log && echo This is our api log > api.log
+cd ../../..
 ```
 
 ***
@@ -92,6 +92,18 @@ cd logs && echo This is our celery log > celery.log && echo This is our api log 
 Use the following command to fire up Docker
 ```
 docker-compose -f HashGraphHub/docker-compose.yml up -d --build --remove-orphans
+```
+
+***
+***
+
+## Run Python commands for project setup
+Use the following command set the project up correctly
+```
+docker-compose -f HashGraphHub/docker-compose.yml exec api python manage.py migrate --noinput
+docker-compose -f HashGraphHub/docker-compose.yml exec api python manage.py runscript config
+docker-compose -f HashGraphHub/docker-compose.yml exec api python manage.py test
+
 ```
 
 ***
