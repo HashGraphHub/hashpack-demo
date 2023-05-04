@@ -11,20 +11,13 @@
 
 In this module we will begin building our Hedera API connector. We will be using the python SDK that is already installed in our docker container.
 
-1) Use the following code to enter into the api container.
+1) Use the following code to create a new app in the backend called extrnal_apis.
 ```
-docker exec -it hashgraphhub_api_1 bash
+docker-compose -f HashGraphHub/docker-compose.yml exec api python manage.py startapp extrnal_apis
 
 ```
 
-2) Go ahead and start a new app called external_apis
-```
-python manage.py startapp external_apis
-exit
-```
->Note: You should now have a new directory in /app/backend. We will use this directory to manage...You guessed it...External API's :)
-
-3) Use the following code to create a directories and files we need for Hedera
+2) Use the following code to create a directories and files we need for Hedera
 
 ```
 cd app/backend/external_apis
