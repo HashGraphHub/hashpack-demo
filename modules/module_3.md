@@ -310,5 +310,16 @@ http post http://api:8000/api/v1/auth/token/login/ email=<your email> password=<
 ```
 http post http://api:8000/api/v1/account/ 'Authorization: Token <your token>' external_id=<your wallet id> private_key=<your private key>
 ```
+>Note make a note of your new acocunt id.
+
+7) Now test the retrieve endpoint.
+```
+http get http://api:8000/api/v1/account/<account id>/ 'Authorization: Token <your token>'
+```
+8) Now test the new get list endpoint.
+```
+http get http://api:8000/api/v1/account/ 'Authorization: Token <your token>'
+```
+
 ***
 ***
