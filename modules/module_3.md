@@ -310,7 +310,7 @@ http post http://api:8000/api/v1/auth/token/login/ email=<your email> password=<
 ```
 http post http://api:8000/api/v1/account/ 'Authorization: Token <your token>' external_id=<your wallet id> private_key=<your private key>
 ```
->Note make a note of your new acocunt id.
+>Note make a note of your new account id.
 
 7) Now test the retrieve endpoint.
 ```
