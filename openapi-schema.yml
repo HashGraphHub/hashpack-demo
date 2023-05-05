@@ -63,7 +63,7 @@ paths:
         - bearerAuth: []
       requestBody: []
       responses:
-        '200':
+        '204':
           content:
             application/json:
               schema:
@@ -74,6 +74,31 @@ paths:
       tags:
         - 'User Authentication'
   
+  api/v1/auth/account/:
+    post:
+      operationId: createAccount
+      description: 'This end point is used to create (import) a new user wallet via the SPA.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AccountCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AccountCreate'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountCreated'
+          description: 'Wallet imported'
+      tags:
+        - 'User Wallet'
 components:
   responses:
     UnauthorizedError:
@@ -169,3 +194,41 @@ components:
           type: string
           example: skjfvhudhvevbesbvjbvejrfbvfbv
           description: ''
+
+    AccountCreate:
+      type: object
+      properties:
+        
+        external_id:
+          type: string
+          maxLength: 150
+          example: 0.0.11111
+          description: ''
+        private_key:
+          type: string
+          maxLength: 150
+          example: 1312312312312313212312312312312313212345645135456123123123
+          description: ''
+      required:
+      - external_id
+      - private_key
+
+    AccountCreated:
+      type: object
+      properties:
+        id:
+          type: uuid
+          example: 1234-5678-9101-1121
+        external_id:
+          type: string
+          maxLength: 150
+          example: 0.0.11111
+          description: ''
+        private_key:
+          type: string
+          maxLength: 150
+          example: 1312312312312313212312312312312313212345645135456123123123
+          description: ''
+      required:
+      - external_id
+      - private_key
