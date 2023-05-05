@@ -86,3 +86,35 @@ class SignUpTestCase(APITestCase):
         data["email"] = 'test@didcoding.com'
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class SignInTestCase(APITestCase):
+
+    """
+    Test suite for User management
+    """
+    def setUp(self):
+        self.test_user = CustomUser.objects.create(
+            email= "test@didcoding.com",
+            first_name= "Test",
+            last_name="Case",
+            password= make_password("fredfred1"),
+            dob= datetime.fromisoformat("1982-01-24 00:00:00+00:00"),
+            is_active=True
+            )
+        self.client = APIClient()
+        self.data = {
+            "email": "test@didcoding.com",
+            "password": "fredfred1"
+        }
+        self.url = "/api/v1/auth/token/login/"
+
+    def test_login_user(self):
+        '''
+        test djoser signin endpoint
+        '''
+        data = self.data
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+   
