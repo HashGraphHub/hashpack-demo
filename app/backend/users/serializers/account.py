@@ -67,5 +67,4 @@ class AccountSerializer(serializers.ModelSerializer):
 		fields = (
 			'id',
 			'external_id',
-			'private_key'
 		)
