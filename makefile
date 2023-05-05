@@ -22,8 +22,8 @@ down_v:
 logs:
 	docker-compose -f HashGraphHub/docker-compose.yml logs
 
-api_logs:
-	docker-compose -f HashGraphHub/docker-compose.yml logs api
+app_logs:
+	docker-compose -f HashGraphHub/docker-compose.yml logs app
 
 celery_logs:
 	docker-compose -f HashGraphHub/docker-compose.yml logs celery
@@ -41,26 +41,25 @@ flower_logs:
 	docker-compose -f HashGraphHub/docker-compose.yml logs flower
 
 migrate:
-	docker-compose -f HashGraphHub/docker-compose.yml exec api python manage.py migrate --noinput
+	docker-compose -f HashGraphHub/docker-compose.yml exec app python manage.py migrate --noinput
 
 makemigrations:
-	docker-compose -f HashGraphHub/docker-compose.yml exec api python manage.py makemigrations
+	docker-compose -f HashGraphHub/docker-compose.yml exec app python manage.py makemigrations
 
 shell:
-	docker-compose -f HashGraphHub/docker-compose.yml exec api python manage.py shell
+	docker-compose -f HashGraphHub/docker-compose.yml exec app python manage.py shell
 
 superuser:
-	docker-compose -f HashGraphHub/docker-compose.yml exec api python manage.py createsuperuser
+	docker-compose -f HashGraphHub/docker-compose.yml exec app python manage.py createsuperuser
 
 test:
-	docker-compose -f HashGraphHub/docker-compose.yml exec api python manage.py test
+	docker-compose -f HashGraphHub/docker-compose.yml exec app python manage.py test
 
 config:
-	docker-compose -f HashGraphHub/docker-compose.yml exec api python manage.py runscript config
+	docker-compose -f HashGraphHub/docker-compose.yml exec app python manage.py runscript config
 
 prune:
 	docker system prune
 
 enter_api:
-	docker exec -it hashgraphhub_api_1 bash
-
+	docker exec -it api bash
