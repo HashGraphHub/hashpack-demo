@@ -62,5 +62,4 @@ prune:
 	docker system prune
 
 enter_api:
-	docker exec -it hashgraphhub_api_1 bash
-
+	docker exec -it api bash

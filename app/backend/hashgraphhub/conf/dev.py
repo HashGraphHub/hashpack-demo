@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 import os
 import socket
 load_dotenv()
+import logging.config
+from django.utils.log import DEFAULT_LOGGING
+from django.core.management.color import supports_color
 
 DEBUG = int(os.environ.get("DEBUG", default=0))
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
@@ -85,54 +88,122 @@ HEDERA_ENV = os.environ.get('HEDERA_ENV')
 # --------------------------------------------------------------
 LOGFILEPATH = os.environ.get('LOGFILEPATH')
 CELERYLOGFILEPATH = os.environ.get('CELERYLOGFILEPATH')
+LOGLEVEL = os.environ.get('LOGLEVEL', 'DEBUG' if DEBUG else 'INFO').upper()
+CELERY_TASKS_LOGGER_NAME = "celery_tasks"
 
-LOGGING = {
+logging.config.dictConfig({
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
+        'console': {
+            # see more parameters at https://docs.python.org/3/library/logging.html#logging.LogRecord
+            'format': '[%(asctime)s,%(msecs)03d %(levelname)s %(filename)s:%(lineno)s|%(name)s] %(message)s',
+            'datefmt': "%Y-%m-%d %H:%M:%S",
         },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
+
+        'hashgraphhub.json.formatter': {
+            'class': 'utils.logger.hashgraphhubJsonFormatter'
         },
-    },
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
+
+        'colorlog': {
+            'class': 'colorlog.ColoredFormatter',
+            'format': '%(log_color)s[%(asctime)s,%(msecs)03d %(levelname)s %(filename)s:%(lineno)s|%(name)s] %(message)s',
+            'datefmt': "%Y-%m-%d %H:%M:%S",
         },
+
+        'django.server': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[{asctime}] {message}',
+            'datefmt': "%Y-%m-%d %H:%M:%S",
+            'style': '{'
+        }
     },
     'handlers': {
         'console': {
-            'level': 'INFO',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple'
+            'class': 'colorlog.StreamHandler' if supports_color() else 'logging.StreamHandler',
+            'formatter': 'colorlog' if supports_color() else 'console',
+            # 'filters': ['require_debug_true']
         },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-        }
+
+        'rotating_file': {
+            'class': 'utils.logger.BetterRotatingFileHandler',
+            'formatter': 'hashgraphhub.json.formatter',
+            # 'filters': ['require_debug_true'],
+            'filename': LOGFILEPATH,
+            'maxBytes': 1024 * 1024 * 10,  # 10 MB
+            'backupCount': 10
+        },
+        'celery_rotating_file': {
+            'class': 'utils.logger.BetterRotatingFileHandler',
+            'formatter': 'hashgraphhub.json.formatter',
+            # 'filters': ['require_debug_true'],
+            'filename': CELERYLOGFILEPATH,
+            'maxBytes': 1024 * 1024 * 10,  # 10 MB
+            'backupCount': 10
+        },
+
+        'django.server': DEFAULT_LOGGING['handlers']['django.server'],
+
     },
     'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'propagate': True,
+        # "root" logger which serves as a catch-all for any logs that are sent from any Python module
+        '': {
+            'level': 'ERROR',
+            'handlers': ['console', 'rotating_file'],
         },
+
+        'django': {
+            'handlers': ['console', 'rotating_file'],
+            'level': 'ERROR',
+        },
+
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['console', 'rotating_file'],
+            'level': LOGLEVEL,
+            'propagate': False,
+        },
+
+        # DB queries
+        'django.db.backends': {
+            'handlers': ['console', 'rotating_file'],
             'level': 'ERROR',
             'propagate': False,
         },
-        'hashgraphhub.custom': {
-            'handlers': ['console', 'mail_admins'],
-            'level': 'INFO',
 
-        }
-    }
-}
+        # Logging From Your Application
+        'hashgraphhub': {
+            'level': LOGLEVEL,
+            'handlers': ['console', 'rotating_file'],
+            # required to avoid double logging with root logger
+            'propagate': False,
+        },
+
+        'users': {
+            'level': LOGLEVEL,
+            'handlers': ['console', 'rotating_file'],
+            # required to avoid double logging with root logger
+            'propagate': False,
+        },
+
+        'external_apis': {
+            'level': LOGLEVEL,
+            'handlers': ['console', 'rotating_file'],
+            # required to avoid double logging with root logger
+            'propagate': False,
+        },
+        CELERY_TASKS_LOGGER_NAME: {
+            'level': LOGLEVEL,
+            'handlers': ['console', 'celery_rotating_file'],
+            # required to avoid double logging with root logger
+            'propagate': False,
+        },
+
+        # Django-internals logging
+        'django.server': DEFAULT_LOGGING['loggers']['django.server'],
+
+    },
+})
+
 
 # --------------------------------------------------------------
 # END LOGGING SETTINGS
@@ -142,13 +213,13 @@ LOGGING = {
 # CORS SETTINGS
 # --------------------------------------------------------------
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-    'http://app:3000'
+    'http://localhost:4173',
+    'http://app:4173'
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
