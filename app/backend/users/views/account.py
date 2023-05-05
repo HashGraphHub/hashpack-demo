@@ -30,7 +30,6 @@ from rest_framework.mixins import ListModelMixin,UpdateModelMixin,RetrieveModelM
 class AccountViewSet(
         ListModelMixin,
         RetrieveModelMixin, 
-        UpdateModelMixin,
         viewsets.GenericViewSet
         ):
     """
@@ -46,12 +45,13 @@ class AccountViewSet(
         return AccountSerializer
 
     def list(self, request):
-        serializer = self.get_serializer_class(self.queryset, many=True)
+        qs = self.queryset.filter(user = request.user)
+        serializer = self.get_serializer_class()(qs, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         obj = get_object_or_404(self.queryset, pk = pk)
-        serializer = self.get_serializer_class(obj)
+        serializer = self.get_serializer_class()(obj)
         return Response(serializer.data)
 
     def create(self, request):

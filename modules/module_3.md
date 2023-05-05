@@ -65,6 +65,11 @@ class CreateAccountSerializer(serializers.ModelSerializer):
 
 		operator = attrs.get("external_id")
 		operator_private_key = attrs.get("private_key")
+
+		#check if external_id already exists
+		acc = Account.objects.filter(external_id = operator)
+		if acc.exists():
+			raise ValidationError("Validation Error: External id is already used.")
 		
 		#instantiate the HederaAccount class
 		acc = HederaAccount(
@@ -80,7 +85,7 @@ class CreateAccountSerializer(serializers.ModelSerializer):
 		return attrs
 	
 	def create_account(self, request, data):
-		acc, create = Account.objects.get_or_create(
+		acc = Account.objects.create(
 			user = request.user, **data
 		)
 		return acc
@@ -94,7 +99,6 @@ class AccountSerializer(serializers.ModelSerializer):
 		fields = (
 			'id',
 			'external_id',
-			'private_key'
 		)
 ```
 
@@ -148,7 +152,6 @@ from rest_framework.mixins import ListModelMixin,UpdateModelMixin,RetrieveModelM
 class AccountViewSet(
         ListModelMixin,
         RetrieveModelMixin, 
-        UpdateModelMixin,
         viewsets.GenericViewSet
         ):
     """
@@ -164,12 +167,13 @@ class AccountViewSet(
         return AccountSerializer
 
     def list(self, request):
-        serializer = self.get_serializer_class(self.queryset, many=True)
+        qs = self.queryset.filter(user = request.user)
+        serializer = self.get_serializer_class()(qs, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         obj = get_object_or_404(self.queryset, pk = pk)
-        serializer = self.get_serializer_class(obj)
+        serializer = self.get_serializer_class()(obj)
         return Response(serializer.data)
 
     def create(self, request):
@@ -248,13 +252,14 @@ class AccountBelongsToUser(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method == "POST":
             return True
-        else:
-            account_id = getattr(request.account, "id", None)
+        try:
+            pk = view.kwargs["pk"]
             user_id = request.user.id
-
-            if not self._does_account_belong_to_user(account_id, user_id):
+            if not self._does_account_belong_to_user(pk, user_id):
                 raise AccountOwnershipException()
             return True
+        except KeyError:
+            return True 
 
     def _does_account_belong_to_user(self, account_id, user_id) -> bool:
         return Account.objects.filter(
@@ -273,6 +278,23 @@ from rest_framework.exceptions import ValidationError
 class AccountOwnershipException(ValidationError):
     default_detail = "Account does not belong to user"
 ```
+
+9) Open /app/backend/users/tests/__init__.py and add the following code.
+```
+# --------------------------------------------------------------
+# App imports
+# --------------------------------------------------------------
+from users.tests.custom_user import CustomUserTestCase, SignUpTestCase, SignInTestCase
+from users.tests.account import AccountTestCase
+
+
+__all__ = [
+    CustomUserTestCase,
+    SignUpTestCase, 
+    SignInTestCase,
+    AccountTestCase
+]
+```
 ***
 ***
 ## Test our endpoint
@@ -280,7 +302,7 @@ We can now test our endpoints. We already have most of the boilerplate endpoints
 
 1) Use the following code to enter into the api container.
 ```
-docker exec -it hashgraphhub_api_1 bash
+docker exec -it api bash
 
 ```
 
@@ -303,7 +325,18 @@ http post http://api:8000/api/v1/auth/token/login/ email=<your email> password=<
 
 6) Now import the wallet with the following command.
 ```
-http http://api:8000/api/v1/account/ 'Authorization: Token <your token>' external_id=<your wallet id> private_key=<your private key>
+http post http://api:8000/api/v1/account/ 'Authorization: Token <your token>' external_id=<your wallet id> private_key=<your private key>
 ```
+>Note make a note of your new account id.
+
+7) Now test the retrieve endpoint.
+```
+http get http://api:8000/api/v1/account/<account id>/ 'Authorization: Token <your token>'
+```
+8) Now test the new get list endpoint.
+```
+http get http://api:8000/api/v1/account/ 'Authorization: Token <your token>'
+```
+
 ***
 ***

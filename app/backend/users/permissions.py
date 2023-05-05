@@ -25,17 +25,17 @@ class AccountBelongsToUser(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method == "POST":
             return True
-        else:
-            account_id = getattr(request.account, "id", None)
+        try:
+            pk = view.kwargs["pk"]
             user_id = request.user.id
-
-            if not self._does_account_belong_to_user(account_id, user_id):
+            if not self._does_account_belong_to_user(pk, user_id):
                 raise AccountOwnershipException()
             return True
+        except KeyError:
+            return True 
 
     def _does_account_belong_to_user(self, account_id, user_id) -> bool:
         return Account.objects.filter(
             id=account_id,
             user__id=user_id
         ).exists()
-

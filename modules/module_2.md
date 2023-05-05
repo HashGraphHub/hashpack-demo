@@ -136,6 +136,11 @@ class HederaBase:
 3) Go ahead and open /app/backend/external_apis/hedera/endpoints/account.py and use the following code.
 ```
 # --------------------------------------------------------------
+# Python imports
+# --------------------------------------------------------------
+import logging
+
+# --------------------------------------------------------------
 # Django imports
 # --------------------------------------------------------------
 from django.conf import settings
@@ -155,7 +160,7 @@ from hedera import (
     )
 
 client = client()
-
+logger = logging.getLogger(__name__)
 
 class Account(HederaBase):
     '''
@@ -173,14 +178,18 @@ class Account(HederaBase):
         try:
             account_id = self.get_str_repr_object(AccountId, self.account_id)
             client = self.get_client
-        
+
+            logger.info(f"⚠️ Attempting hedera.Account.account_info_query()")
             #Call to hedera endpoint
             obj = AccountInfoQuery(
                 ).setAccountId(account_id
                 ).execute(client)
+            
+            logger.info(f"✅ Success hedera.Account.account_info_query()")
 
             return {"status":200, "obj": obj}
         except Exception as e:
+            logger.info(f"❌ Error hedera.Account.account_info_query() Error = {e}")
             return {"status":400, "obj": e}
     
 ```
