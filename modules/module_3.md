@@ -94,7 +94,6 @@ class AccountSerializer(serializers.ModelSerializer):
 		fields = (
 			'id',
 			'external_id',
-			'private_key'
 		)
 ```
 
@@ -148,7 +147,6 @@ from rest_framework.mixins import ListModelMixin,UpdateModelMixin,RetrieveModelM
 class AccountViewSet(
         ListModelMixin,
         RetrieveModelMixin, 
-        UpdateModelMixin,
         viewsets.GenericViewSet
         ):
     """
@@ -164,12 +162,13 @@ class AccountViewSet(
         return AccountSerializer
 
     def list(self, request):
-        serializer = self.get_serializer_class(self.queryset, many=True)
+        qs = self.queryset.filter(user = request.user)
+        serializer = self.get_serializer_class()(qs, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         obj = get_object_or_404(self.queryset, pk = pk)
-        serializer = self.get_serializer_class(obj)
+        serializer = self.get_serializer_class()(obj)
         return Response(serializer.data)
 
     def create(self, request):
@@ -248,13 +247,14 @@ class AccountBelongsToUser(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method == "POST":
             return True
-        else:
-            account_id = getattr(request.account, "id", None)
+        try:
+            pk = view.kwargs["pk"]
             user_id = request.user.id
-
-            if not self._does_account_belong_to_user(account_id, user_id):
+            if not self._does_account_belong_to_user(pk, user_id):
                 raise AccountOwnershipException()
             return True
+        except KeyError:
+            return True 
 
     def _does_account_belong_to_user(self, account_id, user_id) -> bool:
         return Account.objects.filter(
@@ -280,7 +280,7 @@ We can now test our endpoints. We already have most of the boilerplate endpoints
 
 1) Use the following code to enter into the api container.
 ```
-docker exec -it hashgraphhub_api_1 bash
+docker exec -it api bash
 
 ```
 
