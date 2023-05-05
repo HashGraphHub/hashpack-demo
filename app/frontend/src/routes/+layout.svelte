@@ -74,8 +74,8 @@
 		<HeaderAction icon={UserAvatarFilledAlt} bind:isOpen={isOpen2}>
 			<HeaderPanelLinks>
 				<HeaderPanelDivider>Authentication</HeaderPanelDivider>
-				<HeaderPanelLink on:click={() => (logInOpen = !logInOpen)}>Log in</HeaderPanelLink>
-				<HeaderPanelLink on:click={() => (signUpOpen = !signUpOpen)}>Register</HeaderPanelLink>
+				<HeaderPanelLink href="/login">Log in</HeaderPanelLink>
+				<HeaderPanelLink href="/signup">Register</HeaderPanelLink>
 
 				<HeaderPanelDivider>Switcher subject 2</HeaderPanelDivider>
 				<HeaderPanelLink>Switcher item 1</HeaderPanelLink>
@@ -90,7 +90,7 @@
 
 <SideNav bind:isOpen={isSideNavOpen}>
 	<SideNavItems>
-		<SideNavLink text="Link 1" />
+		<SideNavLink href="/account" text="My Account" />
 		<SideNavLink text="Link 2" />
 		<SideNavLink text="Link 3" />
 		<SideNavMenu text="Menu">
