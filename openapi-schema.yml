@@ -79,6 +79,8 @@ paths:
       operationId: createAccount
       description: 'This end point is used to create (import) a new user wallet via the SPA.'
       parameters: []
+      security:
+        - bearerAuth: []
       requestBody:
         content:
           application/json:
@@ -99,6 +101,55 @@ paths:
           description: 'Wallet imported'
       tags:
         - 'User Wallet'
+    get:
+      operationId: accountList
+      description: 'This end point is used to retrieve all user accounts via the SPA'
+      parameters: []
+      security:
+        - bearerAuth: []
+      requestBody: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountArray'
+          description: 'Account details'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+      tags:
+        - 'User Wallet'
+
+
+  api/v1/auth/account/{id}:
+    get:
+      operationId: retrieveAccount
+      description: 'This end point is used to retrieve a specific account via the SPA'
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: 'Account id'
+          schema:
+            type: uuid
+      security:
+        - bearerAuth: []
+      requestBody: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDetail'
+          description: 'Account info'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+      tags:
+        - 'User Wallet'
+
+ 
 components:
   responses:
     UnauthorizedError:
@@ -146,6 +197,7 @@ components:
       - last_name
       - email
       - password
+  
     UserCreated:
       type: object
       properties:
@@ -213,6 +265,22 @@ components:
       - external_id
       - private_key
 
+    AccountDetail:
+      type: object
+      properties:
+        id:
+          type: uuid
+          example: 1234-5678-9101-1121
+        external_id:
+          type: string
+          maxLength: 150
+          example: 0.0.11111
+          description: ''
+
+      required:
+      - external_id
+      - id
+
     AccountCreated:
       type: object
       properties:
@@ -232,3 +300,24 @@ components:
       required:
       - external_id
       - private_key
+
+    AccountArray:
+      xml: 
+        wrapped: true
+        name: AccountArray
+      type: array
+      items:
+        type: object
+        xml:
+          name: 'item'
+        properties: 
+          id:
+            type: string
+            format: uuid
+            description: 'Account id'
+          external_id:
+            type: string
+            maxLength: 150
+            example: 0.0.11111
+            description: ''
+          
