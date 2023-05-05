@@ -12,7 +12,7 @@ from django.contrib.auth.hashers import make_password
 # --------------------------------------------------------------
 # App imports
 # --------------------------------------------------------------
-from users.models import CustomUser
+from users.models import CustomUser, Account
 
 # --------------------------------------------------------------
 # 3rd Party imports
@@ -55,6 +55,12 @@ class AccountTestCase(APITestCase):
             'private_key': '302e020100300506032b6570042204205f67e3dfcb36270864d68234bc2cc0d861e3b4b1ad100da12725a037375b04c3'
         }
 
+        self.acc = Account.objects.create(
+            user = self.test_user,
+            external_id = '0.0.4563394',
+            private_key= '302e020100300506032b6570042204205f67e3dfcb36270864d68234bc2cc0d861e3b4b1ad100da12725a037375b04c3'
+        )
+
         self.url = "/api/v1/account/"
 
     def test_create_account(self):
@@ -62,5 +68,19 @@ class AccountTestCase(APITestCase):
         test Account create method with a valid Account ID
         '''
         response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_retrieve_account(self):
+        '''
+        test retrieving an Account
+        '''
+        response = self.client.get(f'{self.url}{self.acc.id}/' )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_accounts(self):
+        '''
+        test retrieving an Account
+        '''
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
