@@ -65,6 +65,11 @@ class CreateAccountSerializer(serializers.ModelSerializer):
 
 		operator = attrs.get("external_id")
 		operator_private_key = attrs.get("private_key")
+
+		#check if external_id already exists
+		acc = Account.objects.filter(external_id = operator)
+		if acc.exists():
+			raise ValidationError("Validation Error: External id is already used.")
 		
 		#instantiate the HederaAccount class
 		acc = HederaAccount(
@@ -80,7 +85,7 @@ class CreateAccountSerializer(serializers.ModelSerializer):
 		return attrs
 	
 	def create_account(self, request, data):
-		acc, create = Account.objects.get_or_create(
+		acc = Account.objects.create(
 			user = request.user, **data
 		)
 		return acc
