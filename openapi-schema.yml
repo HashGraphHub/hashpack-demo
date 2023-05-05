@@ -286,6 +286,7 @@ components:
       properties:
         id:
           type: uuid
+          description: 'Account id'
           example: 1234-5678-9101-1121
         external_id:
           type: string
@@ -315,6 +316,7 @@ components:
             type: string
             format: uuid
             description: 'Account id'
+            example: 1234-5678-9101-1121
           external_id:
             type: string
             maxLength: 150
