@@ -70,9 +70,9 @@ logger.info("Response details ...", extra={'logGlobalDuration': True})
 logging._shared_extra = threading.local()
 
 
-class pivotLogger(logging.Logger):
+class hashgraphhubLogger(logging.Logger):
     def __init__(self, *args, **kwargs):
-        super(pivotLogger, self).__init__(*args, **kwargs)
+        super(hashgraphhubLogger, self).__init__(*args, **kwargs)
         self.addFilter(SensitiveDataObfuscatorFilter())
 
     def makeRecord(self, name, level, fn, lno, msg, args, exc_info, func=None, extra=None, sinfo=None):
@@ -80,7 +80,7 @@ class pivotLogger(logging.Logger):
             # Based on required format we need to make sure that any extra information is placed in "data" section.
             extra = {'data': extra}
 
-        return super(pivotLogger, self).makeRecord(name, level, fn, lno, msg, args, exc_info, func, extra, sinfo)
+        return super(hashgraphhubLogger, self).makeRecord(name, level, fn, lno, msg, args, exc_info, func, extra, sinfo)
 
 
 class BetterRotatingFileHandler(RotatingFileHandler):
@@ -98,12 +98,12 @@ class BetterRotatingFileHandler(RotatingFileHandler):
                 raise
 
 
-class pivotJsonFormatter(jsonlogger.JsonFormatter):
+class hashgraphhubJsonFormatter(jsonlogger.JsonFormatter):
     def add_fields(self, log_record, record, message_dict):
-        super(pivotJsonFormatter, self).add_fields(log_record, record, message_dict)
+        super(hashgraphhubJsonFormatter, self).add_fields(log_record, record, message_dict)
 
         # Map all shared_extra params to root level
-        # @NOTE: we cannot map shared_extra in pivotLogger, because not all loggers are pivotLogger,
+        # @NOTE: we cannot map shared_extra in hashgraphhubLogger, because not all loggers are hashgraphhubLogger,
         # so there is a risk to lost this information in log record
         shared_extra = logging.get_shared_extra()
         if len(shared_extra) > 0:
@@ -129,7 +129,7 @@ class pivotJsonFormatter(jsonlogger.JsonFormatter):
             del(log_record['startProcessingTimer'])
 
         log_record['app'] = {
-            'name': 'pivot',
+            'name': 'hashgraphhub',
             "threadName": record.threadName
         }
 
