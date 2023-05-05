@@ -63,7 +63,7 @@ paths:
         - bearerAuth: []
       requestBody: []
       responses:
-        '200':
+        '204':
           content:
             application/json:
               schema:
@@ -91,7 +91,7 @@ paths:
             schema:
               $ref: '#/components/schemas/AccountCreate'
       responses:
-        '201':
+        '200':
           content:
             application/json:
               schema:
