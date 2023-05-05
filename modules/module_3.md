@@ -303,7 +303,7 @@ http post http://api:8000/api/v1/auth/token/login/ email=<your email> password=<
 
 6) Now import the wallet with the following command.
 ```
-http http://api:8000/api/v1/account/ 'Authorization: Token <your token>' external_id=<your wallet id> private_key=<your private key>
+http post http://api:8000/api/v1/account/ 'Authorization: Token <your token>' external_id=<your wallet id> private_key=<your private key>
 ```
 ***
 ***
