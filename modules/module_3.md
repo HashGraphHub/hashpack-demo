@@ -278,6 +278,23 @@ from rest_framework.exceptions import ValidationError
 class AccountOwnershipException(ValidationError):
     default_detail = "Account does not belong to user"
 ```
+
+9) Open /app/backend/users/tests/__init__.py and add the following code.
+```
+# --------------------------------------------------------------
+# App imports
+# --------------------------------------------------------------
+from users.tests.custom_user import CustomUserTestCase, SignUpTestCase, SignInTestCase
+from users.tests.account import AccountTestCase
+
+
+__all__ = [
+    CustomUserTestCase,
+    SignUpTestCase, 
+    SignInTestCase,
+    AccountTestCase
+]
+```
 ***
 ***
 ## Test our endpoint
