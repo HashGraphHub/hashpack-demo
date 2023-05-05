@@ -52,40 +52,37 @@ class SignUpTestCase(APITestCase):
     Test suite for User management
     """
     def setUp(self):
+        self.test_user = CustomUser.objects.create(
+            email= "test@didcoding.com",
+            first_name= "Test",
+            last_name="Case",
+            password= make_password("fredfred1"),
+            dob= datetime.fromisoformat("1982-01-24 00:00:00+00:00")
+            )
         self.client = APIClient()
         self.data = {
-            "account_id": "0.0.112233"
+            "email": "roger@hashgraphhub.com",
+            "first_name": "Roger",
+            "last_name": "Redhat",
+            "password": "fredfred1"
         }
-        self.url = "/signup/"
-        user = CustomUser(username="0.0.332211")
-        user.set_password("0.0.332211")
-        user.save()
+        self.url = "/api/v1/auth/users/"
 
     def test_create_user(self):
         '''
-        test SignUpViewSet create method with a valid Account ID
+        test djoser signup endpoint
         '''
         data = self.data
         response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(CustomUser.objects.count(), 2)
 
     
-    def test_create_user_with_duplicate_account_id(self):
+    def test_create_user_with_duplicate_email(self):
         '''
-        test SignUpViewSet create method with a duplicate account ID
-        '''
-        data = self.data
-        data["account_id"] = "0.0.332211"
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-
-    def test_create_user_without_account_id(self):
-        '''
-        test SignUpViewSet create method without an Account ID
+        test djoser signup endpoint with duplicate email
         '''
         data = self.data
-        data.pop("account_id")
+        data["email"] = 'test@didcoding.com'
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
