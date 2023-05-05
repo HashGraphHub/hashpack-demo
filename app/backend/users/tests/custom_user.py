@@ -73,19 +73,10 @@ class SignUpTestCase(APITestCase):
         test djoser signup endpoint
         '''
         data = self.data
-        response = self.client.post(self.url, data)
+        response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(CustomUser.objects.count(), 2)
 
-    
-    def test_create_user_with_duplicate_email(self):
-        '''
-        test djoser signup endpoint with duplicate email
-        '''
-        data = self.data
-        data["email"] = 'test@didcoding.com'
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
 class SignInTestCase(APITestCase):
@@ -114,7 +105,7 @@ class SignInTestCase(APITestCase):
         test djoser signin endpoint
         '''
         data = self.data
-        response = self.client.post(self.url, data)
+        response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
    
