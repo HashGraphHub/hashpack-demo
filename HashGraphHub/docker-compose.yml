@@ -54,6 +54,7 @@ services:
     image: redis:6-alpine
     ports:
       - "6379:6379"
+    container_name: redis
 
   # celery:
   #   restart: always
@@ -116,6 +117,7 @@ services:
   #   ports:
   #     - 4173:4173
   #   stdin_open: true
+  #   container_name: app
 
 volumes:
   pg:
