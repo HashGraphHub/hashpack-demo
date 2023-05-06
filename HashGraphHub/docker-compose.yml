@@ -109,9 +109,11 @@ services:
   #     dockerfile: docker/docker_files/Dockerfile
   #   restart: unless-stopped
   #   volumes:
-  #     - type: bind
-  #       source: ../app/frontend
-  #       target: /code
+  #     - ../app/frontend/src:/home/node/app/src
+  #     - ../app/frontend/static:/home/node/app/static
+  #     - ../app/frontend/vite.config.js:/home/node/app/vite.config.js
+  #     - ../app/frontend/tsconfig.json:/home/node/app/tsconfig.json
+  #     - ../app/frontend/svelte.config.js:/home/node/app/svelte.config.js
   #   env_file:
   #     - ../app/frontend/.env
   #   ports:
