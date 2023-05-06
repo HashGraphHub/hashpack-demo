@@ -16,6 +16,7 @@ In the last module we created a simple Hedera account query endpoint. We can now
 cd app/backend/users
 mkdir serializers && cd serializers
 echo This is our account file > account.py  && echo '' > __init__.py
+cd ..
 cd tests
 echo this is our account test > account.py
 cd ..
