@@ -1,121 +1,102 @@
-version: "3.7"
-services:
-  db:
-    image: kartoza/postgis:13.0
-    # image: postgres
-    restart: unless-stopped
-    volumes:
-      - pg:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=dev
-      - POSTGRES_PASSWORD=dev
-      - POSTGRES_DB=dev
-      - POSTGRES_PORT= 5432
-    ports:
-      - "5432:5432"
-    container_name: db
+# <span style="color:#f9b000">Project framework</span>
 
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   environment:
-  #     - PGADMIN_DEFAULT_EMAIL=dev@hashgraphhub.com
-  #     - PGADMIN_DEFAULT_PASSWORD=dev
-  #   restart: unless-stopped
-  #   volumes:
-  #     - pgadmin:/var/lib/pgadmin
-  #   ports:
-  #     - "5050:80"
-  #   container_name: pgadmin
+![Project framework](https://static.didcoding.com/media/tutorials/hederahashgraph_how_to/how_to_build_a_hedera_app_1.jpg "Project framework")
 
-  api:
-    build:
-      context: ../app/backend
-      dockerfile: docker/docker_files/Dockerfile
-    restart: unless-stopped
-    command: >
-      bash -c "dockerize -wait tcp://db:5432
-      && python manage.py makemigrations
-      && python manage.py migrate
-      && python manage.py test
-      && python manage.py runscript config
-      && python manage.py runserver 0.0.0.0:8000"
-    volumes:
-      - ../app/backend:/code
-    ports:
-      - 8000:8000
-    env_file:
-      - ../.env
-    depends_on:
-      - db
-      - redis
-    container_name: api
 
-  redis:
-    image: redis:6-alpine
-    ports:
-      - "6379:6379"
+<span style="color:#f9b000">Feel free to use this repo as a 'cheat sheet'</span>
+***
+***
 
-  # celery:
-  #   restart: always
-  #   build:
-  #     context: ../app/backend
-  #     dockerfile: docker/docker_files/Dockerfile
-  #   command: >
-  #     bash -c "dockerize -wait tcp://api:8000
-  #     && celery -A hashgraphhub worker --loglevel=info --logfile=logs/celery.log"
-  #   env_file:
-  #     - ../.env
-  #   depends_on:
-  #     - redis
-  #     - api
-  #     - db
-  #   container_name: celery
+## Prerequisites
+- Docker
+- Docker-Compose
+- Docker desktop
 
-  # beat:
-  #   build:
-  #     context: ../app/backend
-  #     dockerfile: docker/docker_files/Dockerfile
-  #   command: >
-  #     bash -c "dockerize -wait tcp://api:8000
-  #     && celery -A hashgraphhub beat -l info"
-  #   env_file:
-  #     - ../.env
-  #   depends_on:
-  #     - redis
-  #     - api
-  #     - db
-  #   container_name: beat
+***
+***
 
-  # flower:
-  #   build:
-  #     context: ../app/backend
-  #     dockerfile: docker/docker_files/Dockerfile
-  #   command: celery -A hashgraphhub flower --broker=redis://redis:6379
-  #   ports:
-  #     - 5555:5555
-  #   env_file:
-  #     - ../.env
-  #   depends_on:
-  #     - api
-  #     - redis
-  #     - celery
-  #     - db
-  #   container_name: flower
-  
-  # app:
-  #   build:
-  #     context: ../app/frontend
-  #     dockerfile: docker/docker_files/Dockerfile
-  #   restart: unless-stopped
-  #   volumes:
-  #     - type: bind
-  #       source: ../app/frontend:/code
-  #       target: /code
-  #   env_file:
-  #     - ../app/frontend/.env
-  #   ports:
-  #     - 4173:4173
-  #   stdin_open: true
+## Our stack
 
-volumes:
-  pg:
+## What is Hedera?
+<a href="https://hedera.com/" style="color: #9c07b6">Hedera</a> is a decentralized, open-source, proof-of-stake public ledger that utilizes the leaderless, asynchronous Byzantine Fault Tolerance (aBFT) hashgraph consensus algorithm. It is governed by a collusion-resistant, decentralized council of leading enterprises, universities, and web3 projects from around the world.
+
+## What is Django?
+<a href="https://www.djangoproject.com/" style="color: #9c07b6">Django</a> is a high-level Python web framework that encourages rapid development and clean, pragmatic design. Built by experienced developers, it takes care of much of the hassle of web development, so you can focus on writing your app without needing to reinvent the wheel. It’s free and open source.
+
+## What is Docker?
+<a href="https://www.docker.com/" style="color: #9c07b6">Docker</a> takes away repetitive, mundane configuration tasks and is used throughout the development lifecycle for fast, easy and portable application development – desktop and cloud. Docker’s comprehensive end to end platform includes UIs, CLIs, APIs and security that are engineered to work together across the entire application delivery lifecycle.
+
+## What is Carbon Components Svelte?
+<a href="https://www.docker.com/" style="color: #9c07b6">Carbon Components Svelte</a> is a Svelte component library that implements the Carbon Design System, an open source design system by IBM. Design systems facilitate design and development through reuse, consistency, and extensibility.
+
+***
+***
+
+## Getting started
+
+Now that we know what tech stack we're using we can begin creating the framework. In the interest of time, I have build a basic framework that we can build on.
+
+1) Create a new directory on your local machine. I have called mine hashgraphhub. This is your 'root directory'.
+
+2) Open a terminal and cd into the root directory.
+
+3) You can now clone the module_1 branch. You can do this a few different ways. I use SSH...
+
+```
+#option 1 - SSH
+git clone --branch module_1 git@github.com:HashGraphHub/hashpack-demo.git .
+
+#option 2 - Github CLI
+gh repo clone HashGraphHub/hashpack-demo .
+git checkout module_1
+
+#option 3 - HTTPS
+git clone --branch module_1 https://github.com/HashGraphHub/hashpack-demo.git .
+```
+
+***
+***
+
+## Environment variables
+Create a new .env file for the project and add your own information as required
+```
+# windows machine
+copy env.template .env
+cd app/frontend
+copy env.template .env
+cd ../..
+
+#mac/linux
+cp env.template .env
+cd app/frontend
+cp env.template .env
+cd ../..
+```
+
+***
+***
+
+## Logging directory
+Create a new logs dir in backend
+```
+cd app/backend
+mkdir logs
+cd logs && echo This is our celery log > celery.log && echo This is our api log > api.log
+cd ../../..
+```
+
+***
+***
+
+## Fire up Docker
+Use the following command to fire up Docker
+```
+docker-compose -f HashGraphHub/docker-compose.yml up -d --build --remove-orphans
+```
+
+***
+***
+
+## Finish up
+
+You should be able to see the fruits of our labour by visiting http://localhost:8000/api/v1/
