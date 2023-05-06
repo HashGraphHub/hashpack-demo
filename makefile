@@ -66,3 +66,6 @@ prune:
 
 enter_api:
 	docker exec -it api bash
+
+enter_app:
+	docker exec -it app bash
