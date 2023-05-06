@@ -1,221 +1,9 @@
-import { c as create_ssr_component, d as compute_rest_props, e as spread, f as escape_attribute_value, g as escape_object, h as escape, j as compute_slots, k as getContext, v as validate_component, l as add_attribute, o as add_classes, m as missing_component, p as createEventDispatcher, b as subscribe, s as setContext, q as set_store_value, t as each, u as globals } from "../../chunks/index2.js";
-import { w as writable, d as derived } from "../../chunks/index.js";
+import { c as create_ssr_component, d as compute_rest_props, e as spread, f as escape_attribute_value, g as escape_object, h as escape, j as createEventDispatcher, b as subscribe, s as setContext, k as set_store_value, l as add_attribute, o as getContext, v as validate_component, p as add_classes, q as each, t as globals, m as missing_component, u as compute_slots } from "../../chunks/index3.js";
+import { B as Button, W as WarningFilled, a as WarningAltFilled, T as TextInput } from "../../chunks/TextInput.js";
+import { P as PasswordInput } from "../../chunks/PasswordInput.js";
+import { w as writable, d as derived } from "../../chunks/index2.js";
 import { o as onMount } from "../../chunks/ssr.js";
 const all = "";
-const ButtonSkeleton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["href", "size"]);
-  let { href = void 0 } = $$props;
-  let { size = "default" } = $$props;
-  if ($$props.href === void 0 && $$bindings.href && href !== void 0)
-    $$bindings.href(href);
-  if ($$props.size === void 0 && $$bindings.size && size !== void 0)
-    $$bindings.size(size);
-  return `
-${href ? `<a${spread(
-    [
-      { href: escape_attribute_value(href) },
-      {
-        rel: escape_attribute_value($$restProps.target === "_blank" ? "noopener noreferrer" : void 0)
-      },
-      { role: "button" },
-      escape_object($$restProps)
-    ],
-    {
-      classes: "bx--skeleton bx--btn " + (size === "field" ? "bx--btn--field" : "") + " " + (size === "small" ? "bx--btn--sm" : "") + " " + (size === "lg" ? "bx--btn--lg" : "") + " " + (size === "xl" ? "bx--btn--xl" : "")
-    }
-  )}>${escape("")}</a>` : `<div${spread([escape_object($$restProps)], {
-    classes: "bx--skeleton bx--btn " + (size === "field" ? "bx--btn--field" : "") + " " + (size === "small" ? "bx--btn--sm" : "") + " " + (size === "lg" ? "bx--btn--lg" : "") + " " + (size === "xl" ? "bx--btn--xl" : "")
-  })}></div>`}`;
-});
-const ButtonSkeleton$1 = ButtonSkeleton;
-const Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let hasIconOnly;
-  let buttonProps;
-  let $$restProps = compute_rest_props($$props, [
-    "kind",
-    "size",
-    "expressive",
-    "isSelected",
-    "icon",
-    "iconDescription",
-    "tooltipAlignment",
-    "tooltipPosition",
-    "as",
-    "skeleton",
-    "disabled",
-    "href",
-    "tabindex",
-    "type",
-    "ref"
-  ]);
-  let $$slots = compute_slots(slots);
-  let { kind = "primary" } = $$props;
-  let { size = "default" } = $$props;
-  let { expressive = false } = $$props;
-  let { isSelected = false } = $$props;
-  let { icon = void 0 } = $$props;
-  let { iconDescription = void 0 } = $$props;
-  let { tooltipAlignment = "center" } = $$props;
-  let { tooltipPosition = "bottom" } = $$props;
-  let { as = false } = $$props;
-  let { skeleton = false } = $$props;
-  let { disabled = false } = $$props;
-  let { href = void 0 } = $$props;
-  let { tabindex = "0" } = $$props;
-  let { type = "button" } = $$props;
-  let { ref = null } = $$props;
-  const ctx = getContext("ComposedModal");
-  if ($$props.kind === void 0 && $$bindings.kind && kind !== void 0)
-    $$bindings.kind(kind);
-  if ($$props.size === void 0 && $$bindings.size && size !== void 0)
-    $$bindings.size(size);
-  if ($$props.expressive === void 0 && $$bindings.expressive && expressive !== void 0)
-    $$bindings.expressive(expressive);
-  if ($$props.isSelected === void 0 && $$bindings.isSelected && isSelected !== void 0)
-    $$bindings.isSelected(isSelected);
-  if ($$props.icon === void 0 && $$bindings.icon && icon !== void 0)
-    $$bindings.icon(icon);
-  if ($$props.iconDescription === void 0 && $$bindings.iconDescription && iconDescription !== void 0)
-    $$bindings.iconDescription(iconDescription);
-  if ($$props.tooltipAlignment === void 0 && $$bindings.tooltipAlignment && tooltipAlignment !== void 0)
-    $$bindings.tooltipAlignment(tooltipAlignment);
-  if ($$props.tooltipPosition === void 0 && $$bindings.tooltipPosition && tooltipPosition !== void 0)
-    $$bindings.tooltipPosition(tooltipPosition);
-  if ($$props.as === void 0 && $$bindings.as && as !== void 0)
-    $$bindings.as(as);
-  if ($$props.skeleton === void 0 && $$bindings.skeleton && skeleton !== void 0)
-    $$bindings.skeleton(skeleton);
-  if ($$props.disabled === void 0 && $$bindings.disabled && disabled !== void 0)
-    $$bindings.disabled(disabled);
-  if ($$props.href === void 0 && $$bindings.href && href !== void 0)
-    $$bindings.href(href);
-  if ($$props.tabindex === void 0 && $$bindings.tabindex && tabindex !== void 0)
-    $$bindings.tabindex(tabindex);
-  if ($$props.type === void 0 && $$bindings.type && type !== void 0)
-    $$bindings.type(type);
-  if ($$props.ref === void 0 && $$bindings.ref && ref !== void 0)
-    $$bindings.ref(ref);
-  {
-    if (ctx && ref) {
-      ctx.declareRef(ref);
-    }
-  }
-  hasIconOnly = icon && !$$slots.default;
-  buttonProps = {
-    type: href && !disabled ? void 0 : type,
-    tabindex,
-    disabled: disabled === true ? true : void 0,
-    href,
-    "aria-pressed": hasIconOnly && kind === "ghost" && !href ? isSelected : void 0,
-    ...$$restProps,
-    class: [
-      "bx--btn",
-      expressive && "bx--btn--expressive",
-      (size === "small" && !expressive || size === "sm" && !expressive || size === "small" && !expressive) && "bx--btn--sm",
-      size === "field" && !expressive || size === "md" && !expressive && "bx--btn--md",
-      size === "field" && "bx--btn--field",
-      size === "small" && "bx--btn--sm",
-      size === "lg" && "bx--btn--lg",
-      size === "xl" && "bx--btn--xl",
-      kind && `bx--btn--${kind}`,
-      disabled && "bx--btn--disabled",
-      hasIconOnly && "bx--btn--icon-only",
-      hasIconOnly && "bx--tooltip__trigger",
-      hasIconOnly && "bx--tooltip--a11y",
-      hasIconOnly && tooltipPosition && `bx--btn--icon-only--${tooltipPosition}`,
-      hasIconOnly && tooltipAlignment && `bx--tooltip--align-${tooltipAlignment}`,
-      hasIconOnly && isSelected && kind === "ghost" && "bx--btn--selected",
-      $$restProps.class
-    ].filter(Boolean).join(" ")
-  };
-  return `
-${skeleton ? `${validate_component(ButtonSkeleton$1, "ButtonSkeleton").$$render($$result, Object.assign({}, { href }, { size }, $$restProps, { style: hasIconOnly && "width: 3rem;" }), {}, {})}` : `${as ? `${slots.default ? slots.default({ props: buttonProps }) : ``}` : `${href && !disabled ? `
-  <a${spread([escape_object(buttonProps)], {})}${add_attribute("this", ref, 0)}>${hasIconOnly ? `<span${add_classes("bx--assistive-text".trim())}>${escape(iconDescription)}</span>` : ``}
-    ${slots.default ? slots.default({}) : ``}${validate_component(icon || missing_component, "svelte:component").$$render(
-    $$result,
-    {
-      "aria-hidden": "true",
-      class: "bx--btn__icon",
-      "aria-label": iconDescription
-    },
-    {},
-    {}
-  )}</a>` : `<button${spread([escape_object(buttonProps)], {})}${add_attribute("this", ref, 0)}>${hasIconOnly ? `<span${add_classes("bx--assistive-text".trim())}>${escape(iconDescription)}</span>` : ``}
-    ${slots.default ? slots.default({}) : ``}${validate_component(icon || missing_component, "svelte:component").$$render(
-    $$result,
-    {
-      "aria-hidden": "true",
-      class: "bx--btn__icon",
-      style: hasIconOnly ? "margin-left: 0" : void 0,
-      "aria-label": iconDescription
-    },
-    {},
-    {}
-  )}</button>`}`}`}`;
-});
-const Button$1 = Button;
-const WarningFilled = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let labelled;
-  let attributes;
-  let $$restProps = compute_rest_props($$props, ["size", "title"]);
-  let { size = 16 } = $$props;
-  let { title = void 0 } = $$props;
-  if ($$props.size === void 0 && $$bindings.size && size !== void 0)
-    $$bindings.size(size);
-  if ($$props.title === void 0 && $$bindings.title && title !== void 0)
-    $$bindings.title(title);
-  labelled = $$props["aria-label"] || $$props["aria-labelledby"] || title;
-  attributes = {
-    "aria-hidden": labelled ? void 0 : true,
-    role: labelled ? "img" : void 0,
-    focusable: Number($$props["tabindex"]) === 0 ? true : void 0
-  };
-  return `<svg${spread(
-    [
-      { xmlns: "http://www.w3.org/2000/svg" },
-      { viewBox: "0 0 32 32" },
-      { fill: "currentColor" },
-      { preserveAspectRatio: "xMidYMid meet" },
-      { width: escape_attribute_value(size) },
-      { height: escape_attribute_value(size) },
-      escape_object(attributes),
-      escape_object($$restProps)
-    ],
-    {}
-  )}>${title ? `<title>${escape(title)}</title>` : ``}<path d="${"M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14C30,8.3,23.7,2,16,2z M14.9,8h2.2v11h-2.2V8z M16,25	c-0.8,0-1.5-0.7-1.5-1.5S15.2,22,16,22c0.8,0,1.5,0.7,1.5,1.5S16.8,25,16,25z"}"></path><path fill="${"none"}" d="${"M17.5,23.5c0,0.8-0.7,1.5-1.5,1.5c-0.8,0-1.5-0.7-1.5-1.5S15.2,22,16,22	C16.8,22,17.5,22.7,17.5,23.5z M17.1,8h-2.2v11h2.2V8z"}" data-icon-path="${"inner-path"}" opacity="${"0"}"></path></svg>`;
-});
-const WarningFilled$1 = WarningFilled;
-const WarningAltFilled = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let labelled;
-  let attributes;
-  let $$restProps = compute_rest_props($$props, ["size", "title"]);
-  let { size = 16 } = $$props;
-  let { title = void 0 } = $$props;
-  if ($$props.size === void 0 && $$bindings.size && size !== void 0)
-    $$bindings.size(size);
-  if ($$props.title === void 0 && $$bindings.title && title !== void 0)
-    $$bindings.title(title);
-  labelled = $$props["aria-label"] || $$props["aria-labelledby"] || title;
-  attributes = {
-    "aria-hidden": labelled ? void 0 : true,
-    role: labelled ? "img" : void 0,
-    focusable: Number($$props["tabindex"]) === 0 ? true : void 0
-  };
-  return `<svg${spread(
-    [
-      { xmlns: "http://www.w3.org/2000/svg" },
-      { viewBox: "0 0 32 32" },
-      { fill: "currentColor" },
-      { preserveAspectRatio: "xMidYMid meet" },
-      { width: escape_attribute_value(size) },
-      { height: escape_attribute_value(size) },
-      escape_object(attributes),
-      escape_object($$restProps)
-    ],
-    {}
-  )}>${title ? `<title>${escape(title)}</title>` : ``}<path fill="${"none"}" d="${"M16,26a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,26Zm-1.125-5h2.25V12h-2.25Z"}" data-icon-path="${"inner-path"}"></path><path d="${"M16.002,6.1714h-.004L4.6487,27.9966,4.6506,28H27.3494l.0019-.0034ZM14.875,12h2.25v9h-2.25ZM16,26a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,26Z"}"></path><path d="${"M29,30H3a1,1,0,0,1-.8872-1.4614l13-25a1,1,0,0,1,1.7744,0l13,25A1,1,0,0,1,29,30ZM4.6507,28H27.3493l.002-.0033L16.002,6.1714h-.004L4.6487,27.9967Z"}"></path></svg>`;
-});
-const WarningAltFilled$1 = WarningAltFilled;
 const ChevronDown = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let labelled;
   let attributes;
@@ -473,18 +261,18 @@ const ModalFooter = create_ssr_component(($$result, $$props, $$bindings, slots) 
   return `<div${spread([escape_object($$restProps)], {
     classes: "bx--modal-footer " + (secondaryButtons.length === 2 ? "bx--modal-footer--three-button" : "")
   })}>${secondaryButtons.length > 0 ? `${each(secondaryButtons, (button) => {
-    return `${validate_component(Button$1, "Button").$$render($$result, { kind: "secondary" }, {}, {
+    return `${validate_component(Button, "Button").$$render($$result, { kind: "secondary" }, {}, {
       default: () => {
         return `${escape(button.text)}
       `;
       }
     })}`;
-  })}` : `${secondaryButtonText ? `${validate_component(Button$1, "Button").$$render($$result, { kind: "secondary", class: secondaryClass }, {}, {
+  })}` : `${secondaryButtonText ? `${validate_component(Button, "Button").$$render($$result, { kind: "secondary", class: secondaryClass }, {}, {
     default: () => {
       return `${escape(secondaryButtonText)}`;
     }
   })}` : ``}`}
-  ${primaryButtonText ? `${validate_component(Button$1, "Button").$$render(
+  ${primaryButtonText ? `${validate_component(Button, "Button").$$render(
     $$result,
     {
       kind: danger ? "danger" : "primary",
@@ -523,37 +311,6 @@ const LocalStorage = create_ssr_component(($$result, $$props, $$bindings, slots)
   return ``;
 });
 const LocalStorage$1 = LocalStorage;
-const EditOff = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let labelled;
-  let attributes;
-  let $$restProps = compute_rest_props($$props, ["size", "title"]);
-  let { size = 16 } = $$props;
-  let { title = void 0 } = $$props;
-  if ($$props.size === void 0 && $$bindings.size && size !== void 0)
-    $$bindings.size(size);
-  if ($$props.title === void 0 && $$bindings.title && title !== void 0)
-    $$bindings.title(title);
-  labelled = $$props["aria-label"] || $$props["aria-labelledby"] || title;
-  attributes = {
-    "aria-hidden": labelled ? void 0 : true,
-    role: labelled ? "img" : void 0,
-    focusable: Number($$props["tabindex"]) === 0 ? true : void 0
-  };
-  return `<svg${spread(
-    [
-      { xmlns: "http://www.w3.org/2000/svg" },
-      { viewBox: "0 0 32 32" },
-      { fill: "currentColor" },
-      { preserveAspectRatio: "xMidYMid meet" },
-      { width: escape_attribute_value(size) },
-      { height: escape_attribute_value(size) },
-      escape_object(attributes),
-      escape_object($$restProps)
-    ],
-    {}
-  )}>${title ? `<title>${escape(title)}</title>` : ``}<path d="${"M30 28.6L3.4 2 2 3.4l10.1 10.1L4 21.6V28h6.4l8.1-8.1L28.6 30 30 28.6zM9.6 26H6v-3.6l7.5-7.5 3.6 3.6L9.6 26zM29.4 6.2L29.4 6.2l-3.6-3.6c-.8-.8-2-.8-2.8 0l0 0 0 0-8 8 1.4 1.4L20 8.4l3.6 3.6L20 15.6l1.4 1.4 8-8C30.2 8.2 30.2 7 29.4 6.2L29.4 6.2zM25 10.6L21.4 7l3-3L28 7.6 25 10.6z"}"></path></svg>`;
-});
-const EditOff$1 = EditOff;
 const Select = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let errorId;
   let $$restProps = compute_rest_props($$props, [
@@ -666,13 +423,13 @@ const Select = create_ssr_component(($$result, $$props, $$bindings, slots) => {
         `}</label>` : ``}
     ${inline ? `<div${add_classes("bx--select-input--inline__wrapper".trim())}><div${add_attribute("data-invalid", invalid || void 0, 0)}${add_classes("bx--select-input__wrapper".trim())}><select${add_attribute("aria-describedby", invalid ? errorId : void 0, 0)}${add_attribute("aria-invalid", invalid || void 0, 0)} ${disabled || void 0 ? "disabled" : ""} ${required || void 0 ? "required" : ""}${add_attribute("id", id, 0)}${add_attribute("name", name, 0)}${add_classes(("bx--select-input " + (size === "sm" ? "bx--select-input--sm" : "") + " " + (size === "xl" ? "bx--select-input--xl" : "")).trim())}${add_attribute("this", ref, 0)}>${slots.default ? slots.default({}) : ``}</select>
           ${validate_component(ChevronDown$1, "ChevronDown").$$render($$result, { class: "bx--select__arrow" }, {}, {})}
-          ${invalid ? `${validate_component(WarningFilled$1, "WarningFilled").$$render($$result, { class: "bx--select__invalid-icon" }, {}, {})}` : ``}</div>
+          ${invalid ? `${validate_component(WarningFilled, "WarningFilled").$$render($$result, { class: "bx--select__invalid-icon" }, {}, {})}` : ``}</div>
         ${invalid ? `<div${add_attribute("id", errorId, 0)}${add_classes("bx--form-requirement".trim())}>${escape(invalidText)}</div>` : ``}</div>
       ${helperText ? `<div${add_classes(("bx--form__helper-text " + (disabled ? "bx--form__helper-text--disabled" : "")).trim())}>${escape(helperText)}</div>` : ``}` : ``}
     ${!inline ? `<div${add_attribute("data-invalid", invalid || void 0, 0)}${add_classes("bx--select-input__wrapper".trim())}><select${add_attribute("id", id, 0)}${add_attribute("name", name, 0)}${add_attribute("aria-describedby", invalid ? errorId : void 0, 0)} ${disabled || void 0 ? "disabled" : ""} ${required || void 0 ? "required" : ""}${add_attribute("aria-invalid", invalid || void 0, 0)}${add_classes(("bx--select-input " + (size === "sm" ? "bx--select-input--sm" : "") + " " + (size === "xl" ? "bx--select-input--xl" : "")).trim())}${add_attribute("this", ref, 0)}>${slots.default ? slots.default({}) : ``}</select>
         ${validate_component(ChevronDown$1, "ChevronDown").$$render($$result, { class: "bx--select__arrow" }, {}, {})}
-        ${invalid ? `${validate_component(WarningFilled$1, "WarningFilled").$$render($$result, { class: "bx--select__invalid-icon" }, {}, {})}` : ``}
-        ${!invalid && warn ? `${validate_component(WarningAltFilled$1, "WarningAltFilled").$$render(
+        ${invalid ? `${validate_component(WarningFilled, "WarningFilled").$$render($$result, { class: "bx--select__invalid-icon" }, {}, {})}` : ``}
+        ${!invalid && warn ? `${validate_component(WarningAltFilled, "WarningAltFilled").$$render(
     $$result,
     {
       class: "bx--select__invalid-icon bx--select__invalid-icon--warning"
@@ -979,356 +736,6 @@ const ProgressStep = create_ssr_component(($$result, $$props, $$bindings, slots)
     <span${add_classes("bx--progress-line".trim())}></span></button></li>`;
 });
 const ProgressStep$1 = ProgressStep;
-const TextInput = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let isFluid;
-  let errorId;
-  let warnId;
-  let $$restProps = compute_rest_props($$props, [
-    "size",
-    "value",
-    "placeholder",
-    "light",
-    "disabled",
-    "helperText",
-    "id",
-    "name",
-    "labelText",
-    "hideLabel",
-    "invalid",
-    "invalidText",
-    "warn",
-    "warnText",
-    "ref",
-    "required",
-    "inline",
-    "readonly"
-  ]);
-  let $$slots = compute_slots(slots);
-  let { size = void 0 } = $$props;
-  let { value = "" } = $$props;
-  let { placeholder = "" } = $$props;
-  let { light = false } = $$props;
-  let { disabled = false } = $$props;
-  let { helperText = "" } = $$props;
-  let { id = "ccs-" + Math.random().toString(36) } = $$props;
-  let { name = void 0 } = $$props;
-  let { labelText = "" } = $$props;
-  let { hideLabel = false } = $$props;
-  let { invalid = false } = $$props;
-  let { invalidText = "" } = $$props;
-  let { warn = false } = $$props;
-  let { warnText = "" } = $$props;
-  let { ref = null } = $$props;
-  let { required = false } = $$props;
-  let { inline = false } = $$props;
-  let { readonly = false } = $$props;
-  const ctx = getContext("Form");
-  createEventDispatcher();
-  if ($$props.size === void 0 && $$bindings.size && size !== void 0)
-    $$bindings.size(size);
-  if ($$props.value === void 0 && $$bindings.value && value !== void 0)
-    $$bindings.value(value);
-  if ($$props.placeholder === void 0 && $$bindings.placeholder && placeholder !== void 0)
-    $$bindings.placeholder(placeholder);
-  if ($$props.light === void 0 && $$bindings.light && light !== void 0)
-    $$bindings.light(light);
-  if ($$props.disabled === void 0 && $$bindings.disabled && disabled !== void 0)
-    $$bindings.disabled(disabled);
-  if ($$props.helperText === void 0 && $$bindings.helperText && helperText !== void 0)
-    $$bindings.helperText(helperText);
-  if ($$props.id === void 0 && $$bindings.id && id !== void 0)
-    $$bindings.id(id);
-  if ($$props.name === void 0 && $$bindings.name && name !== void 0)
-    $$bindings.name(name);
-  if ($$props.labelText === void 0 && $$bindings.labelText && labelText !== void 0)
-    $$bindings.labelText(labelText);
-  if ($$props.hideLabel === void 0 && $$bindings.hideLabel && hideLabel !== void 0)
-    $$bindings.hideLabel(hideLabel);
-  if ($$props.invalid === void 0 && $$bindings.invalid && invalid !== void 0)
-    $$bindings.invalid(invalid);
-  if ($$props.invalidText === void 0 && $$bindings.invalidText && invalidText !== void 0)
-    $$bindings.invalidText(invalidText);
-  if ($$props.warn === void 0 && $$bindings.warn && warn !== void 0)
-    $$bindings.warn(warn);
-  if ($$props.warnText === void 0 && $$bindings.warnText && warnText !== void 0)
-    $$bindings.warnText(warnText);
-  if ($$props.ref === void 0 && $$bindings.ref && ref !== void 0)
-    $$bindings.ref(ref);
-  if ($$props.required === void 0 && $$bindings.required && required !== void 0)
-    $$bindings.required(required);
-  if ($$props.inline === void 0 && $$bindings.inline && inline !== void 0)
-    $$bindings.inline(inline);
-  if ($$props.readonly === void 0 && $$bindings.readonly && readonly !== void 0)
-    $$bindings.readonly(readonly);
-  isFluid = !!ctx && ctx.isFluid;
-  errorId = `error-${id}`;
-  warnId = `warn-${id}`;
-  return `
-
-<div${add_classes(("bx--form-item bx--text-input-wrapper " + (inline ? "bx--text-input-wrapper--inline" : "") + " " + (light ? "bx--text-input-wrapper--light" : "") + " " + (readonly ? "bx--text-input-wrapper--readonly" : "")).trim())}>${inline ? `<div${add_classes("bx--text-input__label-helper-wrapper".trim())}>${labelText ? `<label${add_attribute("for", id, 0)}${add_classes(("bx--label " + (hideLabel ? "bx--visually-hidden" : "") + " " + (disabled ? "bx--label--disabled" : "") + " " + (inline ? "bx--label--inline" : "") + " " + (size === "sm" ? "bx--label--inline--sm" : "") + " " + (size === "xl" ? "bx--label--inline--xl" : "")).trim())}>${slots.labelText ? slots.labelText({}) : `
-            ${escape(labelText)}
-          `}</label>` : ``}
-      ${!isFluid && helperText ? `<div${add_classes(("bx--form__helper-text " + (disabled ? "bx--form__helper-text--disabled" : "") + " " + (inline ? "bx--form__helper-text--inline" : "")).trim())}>${escape(helperText)}</div>` : ``}</div>` : ``}
-  ${!inline && (labelText || $$slots.labelText) ? `<label${add_attribute("for", id, 0)}${add_classes(("bx--label " + (hideLabel ? "bx--visually-hidden" : "") + " " + (disabled ? "bx--label--disabled" : "") + " " + (inline ? "bx--label--inline" : "") + " " + (inline && size === "sm" ? "bx--label--inline-sm" : "") + " " + (inline && size === "xl" ? "bx--label--inline-xl" : "")).trim())}>${slots.labelText ? slots.labelText({}) : `
-        ${escape(labelText)}
-      `}</label>` : ``}
-  <div${add_classes(("bx--text-input__field-outer-wrapper " + (inline ? "bx--text-input__field-outer-wrapper--inline" : "")).trim())}><div${add_attribute("data-invalid", invalid || void 0, 0)}${add_attribute("data-warn", warn || void 0, 0)}${add_classes(("bx--text-input__field-wrapper " + (!invalid && warn ? "bx--text-input__field-wrapper--warning" : "")).trim())}>${invalid ? `${validate_component(WarningFilled$1, "WarningFilled").$$render($$result, { class: "bx--text-input__invalid-icon" }, {}, {})}` : ``}
-      ${!invalid && warn ? `${validate_component(WarningAltFilled$1, "WarningAltFilled").$$render(
-    $$result,
-    {
-      class: "bx--text-input__invalid-icon\n            bx--text-input__invalid-icon--warning"
-    },
-    {},
-    {}
-  )}` : ``}
-      ${readonly ? `${validate_component(EditOff$1, "EditOff").$$render($$result, { class: "bx--text-input__readonly-icon" }, {}, {})}` : ``}
-      <input${spread(
-    [
-      {
-        "data-invalid": escape_attribute_value(invalid || void 0)
-      },
-      {
-        "aria-invalid": escape_attribute_value(invalid || void 0)
-      },
-      {
-        "data-warn": escape_attribute_value(warn || void 0)
-      },
-      {
-        "aria-describedby": escape_attribute_value(invalid ? errorId : warn ? warnId : void 0)
-      },
-      { disabled: disabled || null },
-      { id: escape_attribute_value(id) },
-      { name: escape_attribute_value(name) },
-      {
-        placeholder: escape_attribute_value(placeholder)
-      },
-      { required: required || null },
-      { readonly: readonly || null },
-      escape_object($$restProps)
-    ],
-    {
-      classes: "bx--text-input " + (light ? "bx--text-input--light" : "") + " " + (invalid ? "bx--text-input--invalid" : "") + " " + (warn ? "bx--text-input--warn" : "") + " " + (size === "sm" ? "bx--text-input--sm" : "") + " " + (size === "xl" ? "bx--text-input--xl" : "")
-    }
-  )}${add_attribute("this", ref, 0)}${add_attribute("value", value, 0)}>
-      ${isFluid ? `<hr${add_classes("bx--text-input__divider".trim())}>` : ``}
-      ${isFluid && !inline && invalid ? `<div${add_attribute("id", errorId, 0)}${add_classes("bx--form-requirement".trim())}>${escape(invalidText)}</div>` : ``}
-      ${isFluid && !inline && warn ? `<div${add_attribute("id", warnId, 0)}${add_classes("bx--form-requirement".trim())}>${escape(warnText)}</div>` : ``}</div>
-    ${!invalid && !warn && !isFluid && !inline && helperText ? `<div${add_classes(("bx--form__helper-text " + (disabled ? "bx--form__helper-text--disabled" : "") + " " + (inline ? "bx--form__helper-text--inline" : "")).trim())}>${escape(helperText)}</div>` : ``}
-    ${!isFluid && invalid ? `<div${add_attribute("id", errorId, 0)}${add_classes("bx--form-requirement".trim())}>${escape(invalidText)}</div>` : ``}
-    ${!isFluid && !invalid && warn ? `<div${add_attribute("id", warnId, 0)}${add_classes("bx--form-requirement".trim())}>${escape(warnText)}</div>` : ``}</div></div>`;
-});
-const TextInput$1 = TextInput;
-const View = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let labelled;
-  let attributes;
-  let $$restProps = compute_rest_props($$props, ["size", "title"]);
-  let { size = 16 } = $$props;
-  let { title = void 0 } = $$props;
-  if ($$props.size === void 0 && $$bindings.size && size !== void 0)
-    $$bindings.size(size);
-  if ($$props.title === void 0 && $$bindings.title && title !== void 0)
-    $$bindings.title(title);
-  labelled = $$props["aria-label"] || $$props["aria-labelledby"] || title;
-  attributes = {
-    "aria-hidden": labelled ? void 0 : true,
-    role: labelled ? "img" : void 0,
-    focusable: Number($$props["tabindex"]) === 0 ? true : void 0
-  };
-  return `<svg${spread(
-    [
-      { xmlns: "http://www.w3.org/2000/svg" },
-      { viewBox: "0 0 32 32" },
-      { fill: "currentColor" },
-      { preserveAspectRatio: "xMidYMid meet" },
-      { width: escape_attribute_value(size) },
-      { height: escape_attribute_value(size) },
-      escape_object(attributes),
-      escape_object($$restProps)
-    ],
-    {}
-  )}>${title ? `<title>${escape(title)}</title>` : ``}<path d="${"M30.94,15.66A16.69,16.69,0,0,0,16,5,16.69,16.69,0,0,0,1.06,15.66a1,1,0,0,0,0,.68A16.69,16.69,0,0,0,16,27,16.69,16.69,0,0,0,30.94,16.34,1,1,0,0,0,30.94,15.66ZM16,25c-5.3,0-10.9-3.93-12.93-9C5.1,10.93,10.7,7,16,7s10.9,3.93,12.93,9C26.9,21.07,21.3,25,16,25Z"}"></path><path d="${"M16,10a6,6,0,1,0,6,6A6,6,0,0,0,16,10Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,16,20Z"}"></path></svg>`;
-});
-const View$1 = View;
-const ViewOff = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let labelled;
-  let attributes;
-  let $$restProps = compute_rest_props($$props, ["size", "title"]);
-  let { size = 16 } = $$props;
-  let { title = void 0 } = $$props;
-  if ($$props.size === void 0 && $$bindings.size && size !== void 0)
-    $$bindings.size(size);
-  if ($$props.title === void 0 && $$bindings.title && title !== void 0)
-    $$bindings.title(title);
-  labelled = $$props["aria-label"] || $$props["aria-labelledby"] || title;
-  attributes = {
-    "aria-hidden": labelled ? void 0 : true,
-    role: labelled ? "img" : void 0,
-    focusable: Number($$props["tabindex"]) === 0 ? true : void 0
-  };
-  return `<svg${spread(
-    [
-      { xmlns: "http://www.w3.org/2000/svg" },
-      { viewBox: "0 0 32 32" },
-      { fill: "currentColor" },
-      { preserveAspectRatio: "xMidYMid meet" },
-      { width: escape_attribute_value(size) },
-      { height: escape_attribute_value(size) },
-      escape_object(attributes),
-      escape_object($$restProps)
-    ],
-    {}
-  )}>${title ? `<title>${escape(title)}</title>` : ``}<path d="${"M5.24,22.51l1.43-1.42A14.06,14.06,0,0,1,3.07,16C5.1,10.93,10.7,7,16,7a12.38,12.38,0,0,1,4,.72l1.55-1.56A14.72,14.72,0,0,0,16,5,16.69,16.69,0,0,0,1.06,15.66a1,1,0,0,0,0,.68A16,16,0,0,0,5.24,22.51Z"}"></path><path d="${"M12 15.73a4 4 0 013.7-3.7l1.81-1.82a6 6 0 00-7.33 7.33zM30.94 15.66A16.4 16.4 0 0025.2 8.22L30 3.41 28.59 2 2 28.59 3.41 30l5.1-5.1A15.29 15.29 0 0016 27 16.69 16.69 0 0030.94 16.34 1 1 0 0030.94 15.66zM20 16a4 4 0 01-6 3.44L19.44 14A4 4 0 0120 16zm-4 9a13.05 13.05 0 01-6-1.58l2.54-2.54a6 6 0 008.35-8.35l2.87-2.87A14.54 14.54 0 0128.93 16C26.9 21.07 21.3 25 16 25z"}"></path></svg>`;
-});
-const ViewOff$1 = ViewOff;
-const PasswordInput = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let isFluid;
-  let errorId;
-  let warnId;
-  let $$restProps = compute_rest_props($$props, [
-    "size",
-    "value",
-    "type",
-    "placeholder",
-    "hidePasswordLabel",
-    "showPasswordLabel",
-    "tooltipAlignment",
-    "tooltipPosition",
-    "light",
-    "disabled",
-    "helperText",
-    "labelText",
-    "hideLabel",
-    "invalid",
-    "invalidText",
-    "warn",
-    "warnText",
-    "inline",
-    "id",
-    "name",
-    "ref"
-  ]);
-  let $$slots = compute_slots(slots);
-  let { size = void 0 } = $$props;
-  let { value = "" } = $$props;
-  let { type = "password" } = $$props;
-  let { placeholder = "" } = $$props;
-  let { hidePasswordLabel = "Hide password" } = $$props;
-  let { showPasswordLabel = "Show password" } = $$props;
-  let { tooltipAlignment = "center" } = $$props;
-  let { tooltipPosition = "bottom" } = $$props;
-  let { light = false } = $$props;
-  let { disabled = false } = $$props;
-  let { helperText = "" } = $$props;
-  let { labelText = "" } = $$props;
-  let { hideLabel = false } = $$props;
-  let { invalid = false } = $$props;
-  let { invalidText = "" } = $$props;
-  let { warn = false } = $$props;
-  let { warnText = "" } = $$props;
-  let { inline = false } = $$props;
-  let { id = "ccs-" + Math.random().toString(36) } = $$props;
-  let { name = void 0 } = $$props;
-  let { ref = null } = $$props;
-  const ctx = getContext("Form");
-  if ($$props.size === void 0 && $$bindings.size && size !== void 0)
-    $$bindings.size(size);
-  if ($$props.value === void 0 && $$bindings.value && value !== void 0)
-    $$bindings.value(value);
-  if ($$props.type === void 0 && $$bindings.type && type !== void 0)
-    $$bindings.type(type);
-  if ($$props.placeholder === void 0 && $$bindings.placeholder && placeholder !== void 0)
-    $$bindings.placeholder(placeholder);
-  if ($$props.hidePasswordLabel === void 0 && $$bindings.hidePasswordLabel && hidePasswordLabel !== void 0)
-    $$bindings.hidePasswordLabel(hidePasswordLabel);
-  if ($$props.showPasswordLabel === void 0 && $$bindings.showPasswordLabel && showPasswordLabel !== void 0)
-    $$bindings.showPasswordLabel(showPasswordLabel);
-  if ($$props.tooltipAlignment === void 0 && $$bindings.tooltipAlignment && tooltipAlignment !== void 0)
-    $$bindings.tooltipAlignment(tooltipAlignment);
-  if ($$props.tooltipPosition === void 0 && $$bindings.tooltipPosition && tooltipPosition !== void 0)
-    $$bindings.tooltipPosition(tooltipPosition);
-  if ($$props.light === void 0 && $$bindings.light && light !== void 0)
-    $$bindings.light(light);
-  if ($$props.disabled === void 0 && $$bindings.disabled && disabled !== void 0)
-    $$bindings.disabled(disabled);
-  if ($$props.helperText === void 0 && $$bindings.helperText && helperText !== void 0)
-    $$bindings.helperText(helperText);
-  if ($$props.labelText === void 0 && $$bindings.labelText && labelText !== void 0)
-    $$bindings.labelText(labelText);
-  if ($$props.hideLabel === void 0 && $$bindings.hideLabel && hideLabel !== void 0)
-    $$bindings.hideLabel(hideLabel);
-  if ($$props.invalid === void 0 && $$bindings.invalid && invalid !== void 0)
-    $$bindings.invalid(invalid);
-  if ($$props.invalidText === void 0 && $$bindings.invalidText && invalidText !== void 0)
-    $$bindings.invalidText(invalidText);
-  if ($$props.warn === void 0 && $$bindings.warn && warn !== void 0)
-    $$bindings.warn(warn);
-  if ($$props.warnText === void 0 && $$bindings.warnText && warnText !== void 0)
-    $$bindings.warnText(warnText);
-  if ($$props.inline === void 0 && $$bindings.inline && inline !== void 0)
-    $$bindings.inline(inline);
-  if ($$props.id === void 0 && $$bindings.id && id !== void 0)
-    $$bindings.id(id);
-  if ($$props.name === void 0 && $$bindings.name && name !== void 0)
-    $$bindings.name(name);
-  if ($$props.ref === void 0 && $$bindings.ref && ref !== void 0)
-    $$bindings.ref(ref);
-  isFluid = !!ctx && ctx.isFluid;
-  errorId = `error-${id}`;
-  warnId = `warn-${id}`;
-  return `
-
-<div${add_classes(("bx--form-item bx--text-input-wrapper " + (!isFluid ? "bx--password-input-wrapper" : "") + " " + (light ? "bx--text-input-wrapper--light" : "") + " " + (inline ? "bx--text-input-wrapper--inline" : "")).trim())}>${inline ? `<label${add_attribute("for", id, 0)}${add_classes(("bx--label " + (hideLabel ? "bx--visually-hidden" : "") + " " + (disabled ? "bx--label--disabled" : "") + " " + (inline ? "bx--label--inline" : "") + " " + (inline && size === "sm" ? "bx--label--inline--sm" : "") + " " + (inline && size === "xl" ? "bx--label--inline--xl" : "")).trim())}>${slots.labelText ? slots.labelText({}) : `
-        ${escape(labelText)}
-      `}</label>
-    ${!isFluid && helperText ? `<div${add_classes(("bx--form__helper-text " + (disabled ? "bx--form__helper-text--disabled" : "") + " " + (inline ? "bx--form__helper-text--inline" : "")).trim())}>${escape(helperText)}</div>` : ``}` : ``}
-  ${!inline && (labelText || $$slots.labelText) ? `<label${add_attribute("for", id, 0)}${add_classes(("bx--label " + (hideLabel ? "bx--visually-hidden" : "") + " " + (disabled ? "bx--label--disabled" : "") + " " + (inline ? "bx--label--inline" : "") + " " + (inline && size === "sm" ? "bx--label--inline--sm" : "") + " " + (inline && size === "xl" ? "bx--label--inline--xl" : "")).trim())}>${slots.labelText ? slots.labelText({}) : `
-        ${escape(labelText)}
-      `}</label>` : ``}
-  <div${add_classes(("bx--text-input__field-outer-wrapper " + (inline ? "bx--text-input__field-outer-wrapper--inline" : "")).trim())}><div${add_attribute("data-invalid", invalid || void 0, 0)}${add_classes(("bx--text-input__field-wrapper " + (warn ? "bx--text-input__field-wrapper--warning" : "")).trim())}>${invalid ? `${validate_component(WarningFilled$1, "WarningFilled").$$render($$result, { class: "bx--text-input__invalid-icon" }, {}, {})}` : ``}
-      ${!invalid && warn ? `${validate_component(WarningAltFilled$1, "WarningAltFilled").$$render(
-    $$result,
-    {
-      class: "bx--text-input__invalid-icon\n            bx--text-input__invalid-icon--warning"
-    },
-    {},
-    {}
-  )}` : ``}
-      <input${spread(
-    [
-      {
-        "data-invalid": escape_attribute_value(invalid || void 0)
-      },
-      {
-        "aria-invalid": escape_attribute_value(invalid || void 0)
-      },
-      {
-        "aria-describedby": escape_attribute_value(invalid ? errorId : warn ? warnId : void 0)
-      },
-      { id: escape_attribute_value(id) },
-      { name: escape_attribute_value(name) },
-      {
-        placeholder: escape_attribute_value(placeholder)
-      },
-      { type: escape_attribute_value(type) },
-      {
-        value: escape_attribute_value(value ?? "")
-      },
-      { disabled: disabled || null },
-      escape_object($$restProps)
-    ],
-    {
-      classes: "bx--text-input bx--password-input " + (light ? "bx--text-input--light" : "") + " " + (invalid ? "bx--text-input--invalid" : "") + " " + (warn ? "bx--text-input--warning" : "") + " " + (size === "sm" ? "bx--text-input--sm" : "") + " " + (size === "xl" ? "bx--text-input--xl" : "")
-    }
-  )}${add_attribute("this", ref, 0)}>
-      ${isFluid && invalid ? `<hr class="${"bx--text-input__divider"}">
-        <div class="${"bx--form-requirement"}"${add_attribute("id", errorId, 0)}>${escape(invalidText)}</div>` : ``}
-      ${!(isFluid && invalid) ? `<button type="${"button"}" ${disabled ? "disabled" : ""}${add_classes(("bx--text-input--password__visibility__toggle bx--btn bx--btn--icon-only " + (disabled ? "bx--btn--disabled" : "") + " bx--tooltip__trigger bx--tooltip--a11y " + (tooltipPosition === "top" ? "bx--tooltip--top" : "") + " " + (tooltipPosition === "right" ? "bx--tooltip--right" : "") + " " + (tooltipPosition === "bottom" ? "bx--tooltip--bottom" : "") + " " + (tooltipPosition === "left" ? "bx--tooltip--left" : "") + " " + (tooltipAlignment === "start" ? "bx--tooltip--align-start" : "") + " " + (tooltipAlignment === "center" ? "bx--tooltip--align-center" : "") + " " + (tooltipAlignment === "end" ? "bx--tooltip--align-end" : "")).trim())}>${!disabled ? `<span${add_classes("bx--assistive-text".trim())}>${type === "text" ? `${escape(hidePasswordLabel)}` : `${escape(showPasswordLabel)}`}</span>` : ``}
-          ${type === "text" ? `${validate_component(ViewOff$1, "ViewOff").$$render($$result, { class: "bx--icon-visibility-off" }, {}, {})}` : `${validate_component(View$1, "View").$$render($$result, { class: "bx--icon-visibility-on" }, {}, {})}`}</button>` : ``}</div>
-    ${!isFluid && invalid ? `<div${add_attribute("id", errorId, 0)}${add_classes("bx--form-requirement".trim())}>${escape(invalidText)}</div>` : ``}
-    ${!invalid && !warn && !isFluid && !inline ? `<div${add_classes(("bx--form__helper-text " + (disabled ? "bx--form__helper-text--disabled" : "") + " " + (inline ? "bx--form__helper-text--inline" : "")).trim())}>${escape(helperText)}</div>` : ``}
-    ${!isFluid && !invalid && warn ? `<div${add_attribute("id", warnId, 0)}${add_classes("bx--form-requirement".trim())}>${escape(warnText)}</div>` : ``}</div></div>`;
-});
-const PasswordInput$1 = PasswordInput;
 const Toggle = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $$restProps = compute_rest_props($$props, [
     "size",
@@ -2030,7 +1437,7 @@ const PersonalData = create_ssr_component(($$result, $$props, $$bindings, slots)
   do {
     $$settled = true;
     passwordDoNotMatch = personalData.pw2 && personalData.pw !== personalData.pw2 ? true : false;
-    $$rendered = `${validate_component(TextInput$1, "TextInput").$$render(
+    $$rendered = `${validate_component(TextInput, "TextInput").$$render(
       $$result,
       {
         labelText: "Name",
@@ -2045,7 +1452,7 @@ const PersonalData = create_ssr_component(($$result, $$props, $$bindings, slots)
       },
       {}
     )}
-${validate_component(TextInput$1, "TextInput").$$render(
+${validate_component(TextInput, "TextInput").$$render(
       $$result,
       {
         labelText: "Email",
@@ -2060,7 +1467,7 @@ ${validate_component(TextInput$1, "TextInput").$$render(
       },
       {}
     )}
-${validate_component(PasswordInput$1, "PasswordInput").$$render(
+${validate_component(PasswordInput, "PasswordInput").$$render(
       $$result,
       {
         tooltipAlignment: "start",
@@ -2077,7 +1484,7 @@ ${validate_component(PasswordInput$1, "PasswordInput").$$render(
       },
       {}
     )}
-${validate_component(PasswordInput$1, "PasswordInput").$$render(
+${validate_component(PasswordInput, "PasswordInput").$$render(
       $$result,
       {
         tooltipAlignment: "start",
@@ -2232,7 +1639,7 @@ const Login = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           )}
 	${validate_component(ModalBody$1, "ModalBody").$$render($$result, { hasForm: true }, {}, {
             default: () => {
-              return `${validate_component(TextInput$1, "TextInput").$$render(
+              return `${validate_component(TextInput, "TextInput").$$render(
                 $$result,
                 {
                   labelText: "Email",
@@ -2247,7 +1654,7 @@ const Login = create_ssr_component(($$result, $$props, $$bindings, slots) => {
                 },
                 {}
               )}
-		${validate_component(PasswordInput$1, "PasswordInput").$$render(
+		${validate_component(PasswordInput, "PasswordInput").$$render(
                 $$result,
                 {
                   tooltipAlignment: "start",
@@ -2410,12 +1817,12 @@ ${validate_component(Header$1, "Header").$$render(
                             return `Authentication`;
                           }
                         })}
-				${validate_component(HeaderPanelLink$1, "HeaderPanelLink").$$render($$result, {}, {}, {
+				${validate_component(HeaderPanelLink$1, "HeaderPanelLink").$$render($$result, { href: "/login" }, {}, {
                           default: () => {
                             return `Log in`;
                           }
                         })}
-				${validate_component(HeaderPanelLink$1, "HeaderPanelLink").$$render($$result, {}, {}, {
+				${validate_component(HeaderPanelLink$1, "HeaderPanelLink").$$render($$result, { href: "/signup" }, {}, {
                           default: () => {
                             return `Register`;
                           }
@@ -2475,7 +1882,7 @@ ${validate_component(SideNav$1, "SideNav").$$render(
         default: () => {
           return `${validate_component(SideNavItems$1, "SideNavItems").$$render($$result, {}, {}, {
             default: () => {
-              return `${validate_component(SideNavLink$1, "SideNavLink").$$render($$result, { text: "Link 1" }, {}, {})}
+              return `${validate_component(SideNavLink$1, "SideNavLink").$$render($$result, { href: "/account", text: "My Account" }, {}, {})}
 		${validate_component(SideNavLink$1, "SideNavLink").$$render($$result, { text: "Link 2" }, {}, {})}
 		${validate_component(SideNavLink$1, "SideNavLink").$$render($$result, { text: "Link 3" }, {}, {})}
 		${validate_component(SideNavMenu$1, "SideNavMenu").$$render($$result, { text: "Menu" }, {}, {

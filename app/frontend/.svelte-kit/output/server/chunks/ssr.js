@@ -1,4 +1,4 @@
-import "./index2.js";
+import "./index3.js";
 function onMount() {
 }
 function afterUpdate() {
