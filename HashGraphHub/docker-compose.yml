@@ -101,6 +101,21 @@ services:
   #     - celery
   #     - db
   #   container_name: flower
+  
+  # app:
+  #   build:
+  #     context: ../app/frontend
+  #     dockerfile: docker/docker_files/Dockerfile
+  #   restart: unless-stopped
+  #   volumes:
+  #     - type: bind
+  #       source: ../app/frontend:/code
+  #       taget: /code
+  #   env_file:
+  #     - ../app/frontend/.env
+  #   ports:
+  #     - 4173:4173
+  #   stdin_open: true
 
 volumes:
   pg:
