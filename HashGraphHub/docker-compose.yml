@@ -110,7 +110,7 @@ services:
   #   volumes:
   #     - type: bind
   #       source: ../app/frontend:/code
-  #       taget: /code
+  #       target: /code
   #   env_file:
   #     - ../app/frontend/.env
   #   ports:
