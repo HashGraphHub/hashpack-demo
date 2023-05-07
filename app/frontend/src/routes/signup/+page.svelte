@@ -10,11 +10,11 @@
 	} from 'carbon-components-svelte';
 
 	export let personalData: any = {
-		firstName: 'Jake',
-		lastName: 'Hall',
-		email: 'jaycoolslm@gmail.com',
-		pw: 'fredfred1',
-		pw2: 'fredfred1'
+		firstName: '',
+		lastName: '',
+		email: '',
+		pw: '',
+		pw2: ''
 	};
 
 	//  check if passwords match
@@ -32,11 +32,10 @@
 </script>
 
 <Form method="POST">
-	<Grid style="padding: 0">
+	<Grid noGutter fullWidth>
 		<Row>
 			<Column>
 				<TextInput
-					cols={4}
 					labelText="First Name"
 					placeholder="John"
 					name="first_name"
@@ -45,7 +44,6 @@
 			</Column>
 			<Column>
 				<TextInput
-					cols={4}
 					labelText="Last Name"
 					placeholder="Doe"
 					name="last_name"
