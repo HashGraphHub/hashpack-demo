@@ -9,6 +9,10 @@
 		Column
 	} from 'carbon-components-svelte';
 
+	import InfoModal from '$lib/components/modal/infoModal.svelte';
+
+	import type {ActionData} from "./$types"
+
 	export let personalData: any = {
 		firstName: '',
 		lastName: '',
@@ -29,7 +33,22 @@
 		!passwordDoNotMatch
 			? false
 			: true;
+
+	export let form: ActionData
+
+	let formSubmitModal = false
+
+	$: console.log(form)
+
 </script>
+
+
+{#if form !== null}
+<InfoModal
+	heading="Form submitted"
+	content={form.message}
+/>
+{/if}
 
 <Form method="POST">
 	<Grid noGutter fullWidth>

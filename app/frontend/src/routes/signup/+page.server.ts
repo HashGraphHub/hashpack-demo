@@ -32,9 +32,15 @@ export const actions = {
 		const { status } = response;
 
 		if (status === 201) {
-			throw redirect(302, '/login');
+			return {
+				success: true,
+				message: 'Sign up successful. Please check your email for a verification link.'
+			};
 		} else {
-			throw redirect(302, '/signup');
+			return {
+				success: false,
+				message: JSON.stringify(json)
+			};
 		}
 	}
 } satisfies Actions;

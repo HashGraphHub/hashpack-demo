@@ -36,7 +36,6 @@ services:
       bash -c "dockerize -wait tcp://db:5432
       && python manage.py makemigrations
       && python manage.py migrate
-      && python manage.py test
       && python manage.py runscript config
       && python manage.py runserver 0.0.0.0:8000"
     volumes:
@@ -102,7 +101,7 @@ services:
   #     - celery
   #     - db
   #   container_name: flower
-  
+
   app:
     build:
       context: ../app/frontend
